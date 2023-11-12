@@ -227,8 +227,8 @@ public class SunTimesCalculator extends AstronomicalCalculator {
 	 *         (expected behavior for some locations such as near the poles,
 	 *         {@link Double#NaN} will be returned.
 	 */
-	private static double getTimeUTC(Calendar calendar, GeoLocation geoLocation, double zenith, boolean isSunrise) {
-		int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
+	private static double getTimeUTC(ZonedDateTime calendar, GeoLocation geoLocation, double zenith, boolean isSunrise) {
+		int dayOfYear = calendar.getDayOfYear();
 		double sunMeanAnomaly = getMeanAnomaly(dayOfYear, geoLocation.getLongitude(), isSunrise);
 		double sunTrueLong = getSunTrueLongitude(sunMeanAnomaly);
 		double sunRightAscensionHours = getSunRightAscensionHours(sunTrueLong);

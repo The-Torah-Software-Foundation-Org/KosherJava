@@ -18,6 +18,7 @@ package com.kosherjava.zmanim.util;
 import java.lang.reflect.Method;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -417,9 +418,9 @@ public class ZmanimFormatter {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		df.setTimeZone(astronomicalCalendar.getGeoLocation().getTimeZone());
 
-		Date date = astronomicalCalendar.getCalendar().getTime();
+		ZonedDateTime date = astronomicalCalendar.getCalendar();
 		TimeZone tz = astronomicalCalendar.getGeoLocation().getTimeZone();
-		boolean daylight = tz.useDaylightTime() && tz.inDaylightTime(date);
+		boolean daylight = tz.useDaylightTime() && date.getZone().getRules().isDaylightSavings(date.toInstant());
 
 		StringBuilder sb = new StringBuilder("<");
 		if (astronomicalCalendar.getClass().getName().equals("com.kosherjava.zmanim.AstronomicalCalendar")) {
@@ -448,7 +449,7 @@ public class ZmanimFormatter {
 		sb.append(" timeZoneName=\"").append(tz.getDisplayName(daylight, TimeZone.LONG)).append("\"");
 		sb.append(" timeZoneID=\"").append(tz.getID()).append("\"");
 		sb.append(" timeZoneOffset=\"")
-				.append((tz.getOffset(astronomicalCalendar.getCalendar().getTimeInMillis()) / ((double) HOUR_MILLIS)))
+				.append((tz.getOffset(astronomicalCalendar.getCalendar().toInstant().toEpochMilli()) / ((double) HOUR_MILLIS)))
 				.append("\"");
 
 		sb.append(">\n");
@@ -493,7 +494,7 @@ public class ZmanimFormatter {
 		for (int i = 0; i < dateList.size(); i++) {
 			zman = (Zman) dateList.get(i);
 			sb.append("\t<").append(zman.getLabel()).append(">");
-			sb.append(formatter.formatDateTime(zman.getZman(), astronomicalCalendar.getCalendar()));
+//			sb.append(formatter.formatDateTime(zman.getZman(), astronomicalCalendar.getCalendar())); //TODO figure out how to use java.time
 			sb.append("</").append(zman.getLabel()).append(">\n");
 		}
 		Collections.sort(durationList, Zman.DURATION_ORDER);
@@ -577,9 +578,9 @@ public class ZmanimFormatter {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		df.setTimeZone(astronomicalCalendar.getGeoLocation().getTimeZone());
 
-		Date date = astronomicalCalendar.getCalendar().getTime();
+		ZonedDateTime date = astronomicalCalendar.getCalendar();
 		TimeZone tz = astronomicalCalendar.getGeoLocation().getTimeZone();
-		boolean daylight = tz.useDaylightTime() && tz.inDaylightTime(date);
+		boolean daylight = tz.useDaylightTime() && date.getZone().getRules().isDaylightSavings(date.toInstant());
 
 		StringBuilder sb = new StringBuilder("{\n\"metadata\":{\n");
 		sb.append("\t\"date\":\"").append(df.format(date)).append("\",\n");
@@ -592,7 +593,7 @@ public class ZmanimFormatter {
 		sb.append("\t\"timeZoneName\":\"").append(tz.getDisplayName(daylight, TimeZone.LONG)).append("\",\n");
 		sb.append("\t\"timeZoneID\":\"").append(tz.getID()).append("\",\n");
 		sb.append("\t\"timeZoneOffset\":\"")
-				.append((tz.getOffset(astronomicalCalendar.getCalendar().getTimeInMillis()) / ((double) HOUR_MILLIS)))
+				.append((tz.getOffset(astronomicalCalendar.getCalendar().toInstant().toEpochMilli()) / ((double) HOUR_MILLIS)))
 				.append("\"");
 
 		sb.append("},\n\"");
@@ -640,7 +641,7 @@ public class ZmanimFormatter {
 		for (int i = 0; i < dateList.size(); i++) {
 			zman = (Zman) dateList.get(i);
 			sb.append("\t\"").append(zman.getLabel()).append("\":\"");
-			sb.append(formatter.formatDateTime(zman.getZman(), astronomicalCalendar.getCalendar()));
+//			sb.append(formatter.formatDateTime(zman.getZman(), astronomicalCalendar.getCalendar())); //TODO figure out how to use java.time
 			sb.append("\",\n");
 		}
 		Collections.sort(durationList, Zman.DURATION_ORDER);
