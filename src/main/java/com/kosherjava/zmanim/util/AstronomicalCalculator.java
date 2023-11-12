@@ -15,7 +15,7 @@
  */
 package com.kosherjava.zmanim.util;
 
-import java.util.Calendar;
+import java.time.ZonedDateTime;
 
 /**
  * An abstract class that all sun time calculating classes extend. This allows the algorithm used to be changed at
@@ -120,8 +120,8 @@ public abstract class AstronomicalCalculator implements Cloneable {
 	 *         {@link java.lang.Double#NaN} will be returned.
 	 * @see #getElevationAdjustment(double)
 	 */
-	public abstract double getUTCSunrise(Calendar calendar, GeoLocation geoLocation, double zenith,
-			boolean adjustForElevation);
+	public abstract double getUTCSunrise(ZonedDateTime calendar, GeoLocation geoLocation, double zenith,
+										 boolean adjustForElevation);
 
 	/**
 	 * A method that calculates UTC sunset as well as any time based on an angle above or below sunset. This abstract
@@ -144,8 +144,8 @@ public abstract class AstronomicalCalculator implements Cloneable {
 	 *         {@link java.lang.Double#NaN} will be returned.
 	 * @see #getElevationAdjustment(double)
 	 */
-	public abstract double getUTCSunset(Calendar calendar, GeoLocation geoLocation, double zenith,
-			boolean adjustForElevation);
+	public abstract double getUTCSunset(ZonedDateTime calendar, GeoLocation geoLocation, double zenith,
+										boolean adjustForElevation);
 	
 	
 	/**
@@ -161,7 +161,7 @@ public abstract class AstronomicalCalculator implements Cloneable {
 	 * 
 	 * @return the time in minutes from zero UTC
 	 */
-	public abstract double getUTCNoon(Calendar calendar, GeoLocation geoLocation);
+	public abstract double getUTCNoon(ZonedDateTime calendar, GeoLocation geoLocation);
 
 	/**
 	 * Method to return the adjustment to the zenith required to account for the elevation. Since a person at a higher

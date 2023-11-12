@@ -15,8 +15,10 @@
  */
 package com.kosherjava.zmanim;
 
-import java.util.Calendar;
+import java.time.LocalTime;
 import java.util.Date;
+import java.util.Calendar;
+import java.time.ZonedDateTime;
 import com.kosherjava.zmanim.util.AstronomicalCalculator;
 import com.kosherjava.zmanim.util.GeoLocation;
 import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar;
@@ -799,7 +801,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getPlagHamincha120Minutes()
 	 */
 	@Deprecated // (forRemoval=false) // add back once Java 9 is the minimum supported version
-	public Date getPlagHamincha120MinutesZmanis() {
+	public ZonedDateTime getPlagHamincha120MinutesZmanis() {
 		return getPlagHamincha(getAlos120Zmanis(), getTzais120Zmanis());
 	}
 
@@ -824,7 +826,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getPlagHamincha26Degrees()
 	 */
 	@Deprecated // (forRemoval=false) // add back once Java 9 is the minimum supported version
-	public Date getPlagHamincha120Minutes() {
+	public ZonedDateTime getPlagHamincha120Minutes() {
 		return getPlagHamincha(getAlos120(), getTzais120());
 	}
 
@@ -858,7 +860,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getPlagHamincha60Minutes()
 	 * @see #getShaahZmanis60Minutes()
 	 */
-	public Date getAlos60() {
+	public ZonedDateTime getAlos60() {
 		return getTimeOffset(getSunrise(), -60 * MINUTE_MILLIS);
 	}
 
@@ -878,7 +880,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         documentation.
 	 * @see #getShaahZmanisGra()
 	 */
-	public Date getAlos72Zmanis() {
+	public ZonedDateTime getAlos72Zmanis() {
 		return getZmanisBasedOffset(-1.2);
 	}
 
@@ -895,7 +897,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         a <code>null</code> will be returned. See detailed explanation on top of the {@link AstronomicalCalendar}
 	 *         documentation.
 	 */
-	public Date getAlos96() {
+	public ZonedDateTime getAlos96() {
 		return getTimeOffset(getElevationAdjustedSunrise(), -96 * MINUTE_MILLIS);
 	}
 
@@ -914,7 +916,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         documentation.
 	 * @see #getShaahZmanisGra()
 	 */
-	public Date getAlos90Zmanis() {
+	public ZonedDateTime getAlos90Zmanis() {
 		return getZmanisBasedOffset(-1.5);
 	}
 
@@ -933,7 +935,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         documentation.
 	 * @see #getShaahZmanisGra()
 	 */
-	public Date getAlos96Zmanis() {
+	public ZonedDateTime getAlos96Zmanis() {
 		return getZmanisBasedOffset(-1.6);
 	}
 
@@ -950,7 +952,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         a <code>null</code> will be returned. See detailed explanation on top of the {@link AstronomicalCalendar}
 	 *         documentation.
 	 */
-	public Date getAlos90() {
+	public ZonedDateTime getAlos90() {
 		return getTimeOffset(getElevationAdjustedSunrise(), -90 * MINUTE_MILLIS);
 	}
 
@@ -978,7 +980,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getAlos26Degrees()
 	 */
 	@Deprecated // (forRemoval=false) // add back once Java 9 is the minimum supported version
-	public Date getAlos120() {
+	public ZonedDateTime getAlos120() {
 		return getTimeOffset(getElevationAdjustedSunrise(), -120 * MINUTE_MILLIS);
 	}
 
@@ -1007,7 +1009,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getAlos26Degrees()
 	 */
 	@Deprecated // (forRemoval=false) // add back once Java 9 is the minimum supported version
-	public Date getAlos120Zmanis() {
+	public ZonedDateTime getAlos120Zmanis() {
 		return getZmanisBasedOffset(-2.0);
 	}
 
@@ -1036,7 +1038,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getTzais26Degrees()
 	 */
 	@Deprecated // (forRemoval=false) // add back once Java 9 is the minimum supported version
-	public Date getAlos26Degrees() {
+	public ZonedDateTime getAlos26Degrees() {
 		return getSunriseOffsetByDegrees(ZENITH_26_DEGREES);
 	}
 
@@ -1050,7 +1052,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         See detailed explanation on top of the {@link AstronomicalCalendar} documentation.
 	 * @see #ASTRONOMICAL_ZENITH
 	 */
-	public Date getAlos18Degrees() {
+	public ZonedDateTime getAlos18Degrees() {
 		return getSunriseOffsetByDegrees(ASTRONOMICAL_ZENITH);
 	}
 	
@@ -1069,7 +1071,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         See detailed explanation on top of the {@link AstronomicalCalendar} documentation.
 	 * @see #ASTRONOMICAL_ZENITH
 	 */
-	public Date getAlos19Degrees() {
+	public ZonedDateTime getAlos19Degrees() {
 		return getSunriseOffsetByDegrees(ZENITH_19_DEGREES);
 	}
 
@@ -1088,7 +1090,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #ZENITH_19_POINT_8
 	 * @see #getAlos90()
 	 */
-	public Date getAlos19Point8Degrees() {
+	public ZonedDateTime getAlos19Point8Degrees() {
 		return getSunriseOffsetByDegrees(ZENITH_19_POINT_8);
 	}
 
@@ -1107,7 +1109,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #ZENITH_16_POINT_1
 	 * @see #getAlos72()
 	 */
-	public Date getAlos16Point1Degrees() {
+	public ZonedDateTime getAlos16Point1Degrees() {
 		return getSunriseOffsetByDegrees(ZENITH_16_POINT_1);
 	}
 
@@ -1126,7 +1128,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         detailed explanation on top of the {@link AstronomicalCalendar} documentation.
 	 * @see #ZENITH_11_POINT_5
 	 */
-	public Date getMisheyakir11Point5Degrees() {
+	public ZonedDateTime getMisheyakir11Point5Degrees() {
 		return getSunriseOffsetByDegrees(ZENITH_11_POINT_5);
 	}
 
@@ -1144,7 +1146,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         {@link AstronomicalCalendar} documentation.
 	 * @see #ZENITH_11_DEGREES
 	 */
-	public Date getMisheyakir11Degrees() {
+	public ZonedDateTime getMisheyakir11Degrees() {
 		return getSunriseOffsetByDegrees(ZENITH_11_DEGREES);
 	}
 
@@ -1162,7 +1164,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         See detailed explanation on top of the {@link AstronomicalCalendar} documentation.
 	 * @see #ZENITH_10_POINT_2
 	 */
-	public Date getMisheyakir10Point2Degrees() {
+	public ZonedDateTime getMisheyakir10Point2Degrees() {
 		return getSunriseOffsetByDegrees(ZENITH_10_POINT_2);
 	}
 	
@@ -1195,7 +1197,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #ZENITH_7_POINT_65
 	 * @see #getMisheyakir9Point5Degrees()
 	 */
-	public Date getMisheyakir7Point65Degrees() {
+	public ZonedDateTime getMisheyakir7Point65Degrees() {
 		return getSunriseOffsetByDegrees(ZENITH_7_POINT_65);
 	}
 	
@@ -1222,7 +1224,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #ZENITH_9_POINT_5
 	 * @see #getMisheyakir7Point65Degrees()
 	 */
-	public Date getMisheyakir9Point5Degrees() {
+	public ZonedDateTime getMisheyakir9Point5Degrees() {
 		return getSunriseOffsetByDegrees(ZENITH_9_POINT_5);
 	}
 
@@ -1242,7 +1244,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getShaahZmanis19Point8Degrees()
 	 * @see #getAlos19Point8Degrees()
 	 */
-	public Date getSofZmanShmaMGA19Point8Degrees() {
+	public ZonedDateTime getSofZmanShmaMGA19Point8Degrees() {
 		return getSofZmanShma(getAlos19Point8Degrees(), getTzais19Point8Degrees());
 	}
 
@@ -1262,7 +1264,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getShaahZmanis16Point1Degrees()
 	 * @see #getAlos16Point1Degrees()
 	 */
-	public Date getSofZmanShmaMGA16Point1Degrees() {
+	public ZonedDateTime getSofZmanShmaMGA16Point1Degrees() {
 		return getSofZmanShma(getAlos16Point1Degrees(), getTzais16Point1Degrees());
 	}
 
@@ -1282,7 +1284,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getShaahZmanis18Degrees()
 	 * @see #getAlos18Degrees()
 	 */
-	public Date getSofZmanShmaMGA18Degrees() {
+	public ZonedDateTime getSofZmanShmaMGA18Degrees() {
 		return getSofZmanShma(getAlos18Degrees(), getTzais18Degrees());
 	}
 
@@ -1304,7 +1306,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getAlos72()
 	 * @see #getSofZmanShmaMGA()
 	 */
-	public Date getSofZmanShmaMGA72Minutes() {
+	public ZonedDateTime getSofZmanShmaMGA72Minutes() {
 		return getSofZmanShmaMGA();
 	}
 
@@ -1326,7 +1328,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getShaahZmanis72MinutesZmanis()
 	 * @see #getAlos72Zmanis()
 	 */
-	public Date getSofZmanShmaMGA72MinutesZmanis() {
+	public ZonedDateTime getSofZmanShmaMGA72MinutesZmanis() {
 		return getSofZmanShma(getAlos72Zmanis(), getTzais72Zmanis());
 	}
 
@@ -1346,7 +1348,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getShaahZmanis90Minutes()
 	 * @see #getAlos90()
 	 */
-	public Date getSofZmanShmaMGA90Minutes() {
+	public ZonedDateTime getSofZmanShmaMGA90Minutes() {
 		return getSofZmanShma(getAlos90(), getTzais90());
 	}
 
@@ -1367,7 +1369,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getShaahZmanis90MinutesZmanis()
 	 * @see #getAlos90Zmanis()
 	 */
-	public Date getSofZmanShmaMGA90MinutesZmanis() {
+	public ZonedDateTime getSofZmanShmaMGA90MinutesZmanis() {
 		return getSofZmanShma(getAlos90Zmanis(), getTzais90Zmanis());
 	}
 
@@ -1387,7 +1389,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getShaahZmanis96Minutes()
 	 * @see #getAlos96()
 	 */
-	public Date getSofZmanShmaMGA96Minutes() {
+	public ZonedDateTime getSofZmanShmaMGA96Minutes() {
 		return getSofZmanShma(getAlos96(), getTzais96());
 	}
 
@@ -1408,7 +1410,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getShaahZmanis96MinutesZmanis()
 	 * @see #getAlos96Zmanis()
 	 */
-	public Date getSofZmanShmaMGA96MinutesZmanis() {
+	public ZonedDateTime getSofZmanShmaMGA96MinutesZmanis() {
 		return getSofZmanShma(getAlos96Zmanis(), getTzais96Zmanis());
 	}
 
@@ -1438,7 +1440,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getSofZmanShmaFixedLocal()
 	 * @see #getSofZmanTfila2HoursBeforeChatzos()
 	 */
-	public Date getSofZmanShma3HoursBeforeChatzos() {
+	public ZonedDateTime getSofZmanShma3HoursBeforeChatzos() {
 		return getTimeOffset(getChatzos(), -180 * MINUTE_MILLIS);
 	}
 
@@ -1459,7 +1461,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getShaahZmanis120Minutes()
 	 * @see #getAlos120()
 	 */
-	public Date getSofZmanShmaMGA120Minutes() {
+	public ZonedDateTime getSofZmanShmaMGA120Minutes() {
 		return getSofZmanShma(getAlos120(), getTzais120());
 	}
 
@@ -1484,7 +1486,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getAlos16Point1Degrees()
 	 * @see #getSeaLevelSunset()
 	 */
-	public Date getSofZmanShmaAlos16Point1ToSunset() {
+	public ZonedDateTime getSofZmanShmaAlos16Point1ToSunset() {
 		return getSofZmanShma(getAlos16Point1Degrees(), getElevationAdjustedSunset());
 	}
 
@@ -1506,7 +1508,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getAlos16Point1Degrees()
 	 * @see #getTzaisGeonim7Point083Degrees()
 	 */
-	public Date getSofZmanShmaAlos16Point1ToTzaisGeonim7Point083Degrees() {
+	public ZonedDateTime getSofZmanShmaAlos16Point1ToTzaisGeonim7Point083Degrees() {
 		return getSofZmanShma(getAlos16Point1Degrees(), getTzaisGeonim7Point083Degrees());
 	}
 
@@ -1527,12 +1529,12 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         will be removed (likely in v3.0) pending confirmation from Rabbi Harfenes.
 	 */
 	@Deprecated // (since="1.3", forRemoval=true) // add back once Java 9 is the minimum supported version
-	public Date getSofZmanShmaKolEliyahu() {
-		Date chatzos = getFixedLocalChatzos();
+	public ZonedDateTime getSofZmanShmaKolEliyahu() {
+		ZonedDateTime chatzos = getFixedLocalChatzos();
 		if (chatzos == null || getSunrise() == null) {
 			return null;
 		}
-		long diff = (chatzos.getTime() - getElevationAdjustedSunrise().getTime()) / 2;
+		long diff = (chatzos.toEpochSecond() - getElevationAdjustedSunrise().toEpochSecond()) / 2;
 		return getTimeOffset(chatzos, -diff);
 	}
 
@@ -1553,7 +1555,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getShaahZmanis19Point8Degrees()
 	 * @see #getAlos19Point8Degrees()
 	 */
-	public Date getSofZmanTfilaMGA19Point8Degrees() {
+	public ZonedDateTime getSofZmanTfilaMGA19Point8Degrees() {
 		return getSofZmanTfila(getAlos19Point8Degrees(), getTzais19Point8Degrees());
 	}
 
@@ -1574,7 +1576,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getShaahZmanis16Point1Degrees()
 	 * @see #getAlos16Point1Degrees()
 	 */
-	public Date getSofZmanTfilaMGA16Point1Degrees() {
+	public ZonedDateTime getSofZmanTfilaMGA16Point1Degrees() {
 		return getSofZmanTfila(getAlos16Point1Degrees(), getTzais16Point1Degrees());
 	}
 
@@ -1595,7 +1597,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getShaahZmanis18Degrees()
 	 * @see #getAlos18Degrees()
 	 */
-	public Date getSofZmanTfilaMGA18Degrees() {
+	public ZonedDateTime getSofZmanTfilaMGA18Degrees() {
 		return getSofZmanTfila(getAlos18Degrees(), getTzais18Degrees());
 	}
 
@@ -1617,7 +1619,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getAlos72()
 	 * @see #getSofZmanShmaMGA()
 	 */
-	public Date getSofZmanTfilaMGA72Minutes() {
+	public ZonedDateTime getSofZmanTfilaMGA72Minutes() {
 		return getSofZmanTfilaMGA();
 	}
 
@@ -1637,7 +1639,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getShaahZmanis72MinutesZmanis()
 	 * @see #getAlos72Zmanis()
 	 */
-	public Date getSofZmanTfilaMGA72MinutesZmanis() {
+	public ZonedDateTime getSofZmanTfilaMGA72MinutesZmanis() {
 		return getSofZmanTfila(getAlos72Zmanis(), getTzais72Zmanis());
 	}
 
@@ -1657,7 +1659,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getShaahZmanis90Minutes()
 	 * @see #getAlos90()
 	 */
-	public Date getSofZmanTfilaMGA90Minutes() {
+	public ZonedDateTime getSofZmanTfilaMGA90Minutes() {
 		return getSofZmanTfila(getAlos90(), getTzais90());
 	}
 
@@ -1678,7 +1680,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getShaahZmanis90MinutesZmanis()
 	 * @see #getAlos90Zmanis()
 	 */
-	public Date getSofZmanTfilaMGA90MinutesZmanis() {
+	public ZonedDateTime getSofZmanTfilaMGA90MinutesZmanis() {
 		return getSofZmanTfila(getAlos90Zmanis(), getTzais90Zmanis());
 	}
 
@@ -1698,7 +1700,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getShaahZmanis96Minutes()
 	 * @see #getAlos96()
 	 */
-	public Date getSofZmanTfilaMGA96Minutes() {
+	public ZonedDateTime getSofZmanTfilaMGA96Minutes() {
 		return getSofZmanTfila(getAlos96(), getTzais96());
 	}
 
@@ -1719,7 +1721,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getShaahZmanis90MinutesZmanis()
 	 * @see #getAlos90Zmanis()
 	 */
-	public Date getSofZmanTfilaMGA96MinutesZmanis() {
+	public ZonedDateTime getSofZmanTfilaMGA96MinutesZmanis() {
 		return getSofZmanTfila(getAlos96Zmanis(), getTzais96Zmanis());
 	}
 
@@ -1740,7 +1742,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getShaahZmanis120Minutes()
 	 * @see #getAlos120()
 	 */
-	public Date getSofZmanTfilaMGA120Minutes() {
+	public ZonedDateTime getSofZmanTfilaMGA120Minutes() {
 		return getSofZmanTfila(getAlos120(), getTzais120());
 	}
 
@@ -1757,7 +1759,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see ZmanimCalendar#getChatzos()
 	 * @see #getSofZmanShma3HoursBeforeChatzos()
 	 */
-	public Date getSofZmanTfila2HoursBeforeChatzos() {
+	public ZonedDateTime getSofZmanTfila2HoursBeforeChatzos() {
 		return getTimeOffset(getChatzos(), -120 * MINUTE_MILLIS);
 	}
 
@@ -1784,7 +1786,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #isUseAstronomicalChatzos()
 	 * @see #isUseAstronomicalChatzosForOtherZmanim()
 	 */
-	public Date getMinchaGedola30Minutes() {
+	public ZonedDateTime getMinchaGedola30Minutes() {
 		return getTimeOffset(getChatzos(), MINUTE_MILLIS * 30);
 	}
 
@@ -1809,7 +1811,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         does not set, a <code>null</code> will be returned. See detailed explanation on top of the
 	 *         {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getMinchaGedola72Minutes() {
+	public ZonedDateTime getMinchaGedola72Minutes() {
 		if(isUseAstronomicalChatzosForOtherZmanim()) {
 			return getHalfDayBasedZman(getChatzos(), getTzais72(), 0.5);
 		} else {
@@ -1834,7 +1836,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         the sun  may not reach low enough below the horizon for this calculation, a <code>null</code> will be returned.
 	 *         See detailed explanation on top of the {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getMinchaGedola16Point1Degrees() {
+	public ZonedDateTime getMinchaGedola16Point1Degrees() {
 		if(isUseAstronomicalChatzosForOtherZmanim()) {
 			return getHalfDayBasedZman(getChatzos(), getTzais16Point1Degrees(), 0.5);
 		} else {
@@ -1865,7 +1867,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getShaahZmanisAlos16Point1ToTzais3Point7()
 	 * @see #getMinchaGedolaGreaterThan30()
 	 */
-	public Date getMinchaGedolaAhavatShalom() {
+	public ZonedDateTime getMinchaGedolaAhavatShalom() {
 		if (getMinchaGedola30Minutes() == null || getMinchaGedola() == null) {
 			return null;
 		} else {
@@ -1891,7 +1893,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #isUseAstronomicalChatzos()
 	 * 
 	 */
-	public Date getMinchaGedolaGreaterThan30() {
+	public ZonedDateTime getMinchaGedolaGreaterThan30() {
 		if (getMinchaGedola30Minutes() == null || getMinchaGedola() == null) {
 			return null;
 		} else {
@@ -1916,7 +1918,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         where the sun may not reach low enough below the horizon for this calculation, a <code>null</code> will be
 	 *         returned. See detailed explanation on top of the {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getMinchaKetana16Point1Degrees() {
+	public ZonedDateTime getMinchaKetana16Point1Degrees() {
 		return getMinchaKetana(getAlos16Point1Degrees(), getTzais16Point1Degrees());
 	}
 	
@@ -1939,7 +1941,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getMinchaGedolaAhavatShalom()
 	 * @see #getPlagAhavatShalom()
 	 */
-	public Date getMinchaKetanaAhavatShalom() {
+	public ZonedDateTime getMinchaKetanaAhavatShalom() {
 		return getTimeOffset(getTzaisGeonim3Point8Degrees(), -getShaahZmanisAlos16Point1ToTzais3Point8() * 2.5);
 	}
 
@@ -1959,7 +1961,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         does not set, a<code>null</code> will be returned. See detailed explanation on top of the
 	 *         {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getMinchaKetana72Minutes() {
+	public ZonedDateTime getMinchaKetana72Minutes() {
 		return getMinchaKetana(getAlos72(), getTzais72());
 	}
 
@@ -1977,7 +1979,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getAlos60()
 	 * @see #getTzais60()
 	 */
-	public Date getPlagHamincha60Minutes() {
+	public ZonedDateTime getPlagHamincha60Minutes() {
 		return getPlagHamincha(getAlos60(), getTzais60());
 	}
 
@@ -2001,7 +2003,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getShaahZmanis72Minutes()
 	 */
 	@Deprecated // (forRemoval=false) // add back once Java 9 is the minimum supported version
-	public Date getPlagHamincha72Minutes() {
+	public ZonedDateTime getPlagHamincha72Minutes() {
 		return getPlagHamincha(getAlos72(), getTzais72());
 	}
 
@@ -2025,7 +2027,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getShaahZmanis90Minutes()
 	 */
 	@Deprecated // (forRemoval=false) // add back once Java 9 is the minimum supported version
-	public Date getPlagHamincha90Minutes() {
+	public ZonedDateTime getPlagHamincha90Minutes() {
 		return getPlagHamincha(getAlos90(), getTzais90());
 	}
 
@@ -2048,7 +2050,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getShaahZmanis96Minutes()
 	 */
 	@Deprecated // (forRemoval=false) // add back once Java 9 is the minimum supported version
-	public Date getPlagHamincha96Minutes() {
+	public ZonedDateTime getPlagHamincha96Minutes() {
 		return getPlagHamincha(getAlos96(), getTzais96());
 	}
 
@@ -2069,7 +2071,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         {@link AstronomicalCalendar} documentation.
 	 */
 	@Deprecated // (forRemoval=false) // add back once Java 9 is the minimum supported version
-	public Date getPlagHamincha96MinutesZmanis() {
+	public ZonedDateTime getPlagHamincha96MinutesZmanis() {
 		return getPlagHamincha(getAlos96Zmanis(), getTzais96Zmanis());
 	}
 
@@ -2090,7 +2092,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         {@link AstronomicalCalendar} documentation.
 	 */
 	@Deprecated // (forRemoval=false) // add back once Java 9 is the minimum supported version
-	public Date getPlagHamincha90MinutesZmanis() {
+	public ZonedDateTime getPlagHamincha90MinutesZmanis() {
 		return getPlagHamincha(getAlos90Zmanis(), getTzais90Zmanis());
 	}
 
@@ -2111,7 +2113,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         {@link AstronomicalCalendar} documentation.
 	 */
 	@Deprecated // (forRemoval=false) // add back once Java 9 is the minimum supported version
-	public Date getPlagHamincha72MinutesZmanis() {
+	public ZonedDateTime getPlagHamincha72MinutesZmanis() {
 		return getPlagHamincha(getAlos72Zmanis(), getTzais72Zmanis());
 	}
 
@@ -2136,7 +2138,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getShaahZmanis16Point1Degrees()
 	 */
 	@Deprecated // (forRemoval=false) // add back once Java 9 is the minimum supported version
-	public Date getPlagHamincha16Point1Degrees() {
+	public ZonedDateTime getPlagHamincha16Point1Degrees() {
 		return getPlagHamincha(getAlos16Point1Degrees(), getTzais16Point1Degrees());
 	}
 
@@ -2161,7 +2163,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getShaahZmanis19Point8Degrees()
 	 */
 	@Deprecated // (forRemoval=false) // add back once Java 9 is the minimum supported version
-	public Date getPlagHamincha19Point8Degrees() {
+	public ZonedDateTime getPlagHamincha19Point8Degrees() {
 		return getPlagHamincha(getAlos19Point8Degrees(), getTzais19Point8Degrees());
 	}
 
@@ -2187,7 +2189,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getPlagHamincha120Minutes()
 	 */
 	@Deprecated // (forRemoval=false) // add back once Java 9 is the minimum supported version
-	public Date getPlagHamincha26Degrees() {
+	public ZonedDateTime getPlagHamincha26Degrees() {
 		return getPlagHamincha(getAlos26Degrees(), getTzais26Degrees());
 	}
 
@@ -2212,7 +2214,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getShaahZmanis18Degrees()
 	 */
 	@Deprecated // (forRemoval=false) // add back once Java 9 is the minimum supported version
-	public Date getPlagHamincha18Degrees() {
+	public ZonedDateTime getPlagHamincha18Degrees() {
 		return getPlagHamincha(getAlos18Degrees(), getTzais18Degrees());
 	}
 
@@ -2236,7 +2238,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getSeaLevelSunset()
 	 */
 	@Deprecated // (forRemoval=false) // add back once Java 9 is the minimum supported version
-	public Date getPlagAlosToSunset() {
+	public ZonedDateTime getPlagAlosToSunset() {
 		return getPlagHamincha(getAlos16Point1Degrees(), getElevationAdjustedSunset());
 	}
 
@@ -2258,7 +2260,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getAlos16Point1Degrees()
 	 * @see #getTzaisGeonim7Point083Degrees()
 	 */
-	public Date getPlagAlos16Point1ToTzaisGeonim7Point083Degrees() {
+	public ZonedDateTime getPlagAlos16Point1ToTzaisGeonim7Point083Degrees() {
 		return getPlagHamincha(getAlos16Point1Degrees(), getTzaisGeonim7Point083Degrees());
 	}
 	
@@ -2279,7 +2281,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getMinchaGedolaAhavatShalom()
 	 * @see #getMinchaKetanaAhavatShalom()
 	 */
-	public Date getPlagAhavatShalom() {
+	public ZonedDateTime getPlagAhavatShalom() {
 		return getTimeOffset(getTzaisGeonim3Point8Degrees(), -getShaahZmanisAlos16Point1ToTzais3Point8() * 1.25);
 	}
 
@@ -2307,7 +2309,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #ZENITH_13_POINT_24
 	 * @see #getBainHashmashosRT58Point5Minutes()
 	 */
-	public Date getBainHashmashosRT13Point24Degrees() {
+	public ZonedDateTime getBainHashmashosRT13Point24Degrees() {
 		return getSunsetOffsetByDegrees(ZENITH_13_POINT_24);
 	}
 	
@@ -2317,7 +2319,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @return the properly spelled version.
 	 */
 	@Deprecated // (forRemoval=true) // add back once Java 9 is the minimum supported version
-	public Date getBainHasmashosRT13Point24Degrees() {
+	public ZonedDateTime getBainHasmashosRT13Point24Degrees() {
 		return getBainHashmashosRT13Point24Degrees();
 	}
 
@@ -2332,7 +2334,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         {@link AstronomicalCalendar} documentation.
 	 * 
 	 */
-	public Date getBainHashmashosRT58Point5Minutes() {
+	public ZonedDateTime getBainHashmashosRT58Point5Minutes() {
 		return getTimeOffset(getElevationAdjustedSunset(), 58.5 * MINUTE_MILLIS);
 	}
 	
@@ -2341,7 +2343,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @return the properly spelled version.
 	 */
 	@Deprecated // (forRemoval=true) // add back once Java 9 is the minimum supported version
-	public Date getBainHasmashosRT58Point5Minutes() {
+	public ZonedDateTime getBainHasmashosRT58Point5Minutes() {
 		return getBainHashmashosRT58Point5Minutes();
 	}
 
@@ -2356,7 +2358,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         {@link AstronomicalCalendar} documentation.
 	 * @see #getTzaisGeonim7Point083Degrees()
 	 */
-	public Date getBainHashmashosRT13Point5MinutesBefore7Point083Degrees() {
+	public ZonedDateTime getBainHashmashosRT13Point5MinutesBefore7Point083Degrees() {
 		return getTimeOffset(getSunsetOffsetByDegrees(ZENITH_7_POINT_083), -13.5 * MINUTE_MILLIS);
 	}
 	
@@ -2365,7 +2367,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @return the properly spelled version.
 	 */
 	@Deprecated // (forRemoval=true) // add back once Java 9 is the minimum supported version
-	public Date getBainHasmashosRT13Point5MinutesBefore7Point083Degrees() {
+	public ZonedDateTime getBainHasmashosRT13Point5MinutesBefore7Point083Degrees() {
 		return getBainHashmashosRT13Point5MinutesBefore7Point083Degrees();
 	}
 
@@ -2381,13 +2383,13 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         calculation, a <code>null</code> will be returned. See detailed explanation on top of the
 	 *         {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getBainHashmashosRT2Stars() {
-		Date alos19Point8 = getAlos19Point8Degrees();
-		Date sunrise = getElevationAdjustedSunrise();
+	public ZonedDateTime getBainHashmashosRT2Stars() {
+		ZonedDateTime alos19Point8 = getAlos19Point8Degrees();
+		ZonedDateTime sunrise = getElevationAdjustedSunrise();
 		if (alos19Point8 == null || sunrise == null) {
 			return null;
 		}
-		return getTimeOffset(getElevationAdjustedSunset(), (sunrise.getTime() - alos19Point8.getTime()) * (5 / 18d));
+		return getTimeOffset(getElevationAdjustedSunset(), (sunrise.toEpochSecond() - alos19Point8.toEpochSecond()) * (5 / 18d));
 	}
 	
 	/**
@@ -2395,7 +2397,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @return the properly spelled version.
 	 */
 	@Deprecated // (forRemoval=true) // add back once Java 9 is the minimum supported version
-	public Date getBainHasmashosRT2Stars() {
+	public ZonedDateTime getBainHasmashosRT2Stars() {
 		return getBainHashmashosRT2Stars();
 	}
 	
@@ -2411,7 +2413,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         {@link AstronomicalCalendar} documentation.
 	 * @see #getBainHashmashosYereim3Point05Degrees()
 	 */
-	public Date getBainHashmashosYereim18Minutes() {
+	public ZonedDateTime getBainHashmashosYereim18Minutes() {
 		return getTimeOffset(getElevationAdjustedSunset(), -18 * MINUTE_MILLIS);
 	}
 	
@@ -2420,7 +2422,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @return the properly spelled version.
 	 */
 	@Deprecated // (forRemoval=true) // add back once Java 9 is the minimum supported version
-	public Date getBainHasmashosYereim18Minutes() {
+	public ZonedDateTime getBainHasmashosYereim18Minutes() {
 		return getBainHashmashosYereim18Minutes();
 	}
 	
@@ -2453,7 +2455,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getBainHashmashosYereim2Point8Degrees()
 	 * @see #getBainHashmashosYereim2Point1Degrees()
 	 */
-	public Date getBainHashmashosYereim3Point05Degrees() {
+	public ZonedDateTime getBainHashmashosYereim3Point05Degrees() {
 		return getSunsetOffsetByDegrees(ZENITH_MINUS_3_POINT_05);
 	}
 	
@@ -2462,7 +2464,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @return the properly spelled version.
 	 */
 	@Deprecated // (forRemoval=true) // add back once Java 9 is the minimum supported version
-	public Date getBainHasmashosYereim3Point05Degrees() {
+	public ZonedDateTime getBainHasmashosYereim3Point05Degrees() {
 		return getBainHashmashosYereim3Point05Degrees();
 	}
 	
@@ -2480,7 +2482,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * 
 	 * @see #getBainHashmashosYereim2Point8Degrees()
 	 */
-	public Date getBainHashmashosYereim16Point875Minutes() {
+	public ZonedDateTime getBainHashmashosYereim16Point875Minutes() {
 		return getTimeOffset(getElevationAdjustedSunset(), -16.875 * MINUTE_MILLIS);
 	}
 	
@@ -2489,7 +2491,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @return the properly spelled version.
 	 */
 	@Deprecated // (forRemoval=true) // add back once Java 9 is the minimum supported version
-	public Date getBainHasmashosYereim16Point875Minutes() {
+	public ZonedDateTime getBainHasmashosYereim16Point875Minutes() {
 		return getBainHashmashosYereim16Point875Minutes();
 	}
 	
@@ -2513,7 +2515,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getBainHashmashosYereim3Point05Degrees()
 	 * @see #getBainHashmashosYereim2Point1Degrees()
 	 */
-	public Date getBainHashmashosYereim2Point8Degrees() {
+	public ZonedDateTime getBainHashmashosYereim2Point8Degrees() {
 		return getSunsetOffsetByDegrees(ZENITH_MINUS_2_POINT_8);
 	}
 	
@@ -2522,7 +2524,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @return the properly spelled version.
 	 */
 	@Deprecated // (forRemoval=true) // add back once Java 9 is the minimum supported version
-	public Date getBainHasmashosYereim2Point8Degrees() {
+	public ZonedDateTime getBainHasmashosYereim2Point8Degrees() {
 		return getBainHashmashosYereim2Point8Degrees();
 	}
 	
@@ -2540,7 +2542,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * 
 	 * @see #getBainHashmashosYereim2Point1Degrees()
 	 */
-	public Date getBainHashmashosYereim13Point5Minutes() {
+	public ZonedDateTime getBainHashmashosYereim13Point5Minutes() {
 		return getTimeOffset(getElevationAdjustedSunset(), -13.5 * MINUTE_MILLIS);
 	}
 	
@@ -2549,7 +2551,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @return the properly spelled version.
 	 */
 	@Deprecated // (forRemoval=true) // add back once Java 9 is the minimum supported version
-	public Date getBainHasmashosYereim13Point5Minutes() {
+	public ZonedDateTime getBainHasmashosYereim13Point5Minutes() {
 		return getBainHashmashosYereim13Point5Minutes();
 	}
 	
@@ -2573,7 +2575,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getBainHashmashosYereim2Point8Degrees()
 	 * @see #getBainHashmashosYereim3Point05Degrees()
 	 */
-	public Date getBainHashmashosYereim2Point1Degrees() {
+	public ZonedDateTime getBainHashmashosYereim2Point1Degrees() {
 		return getSunsetOffsetByDegrees(ZENITH_MINUS_2_POINT_1);
 	}
 	
@@ -2582,7 +2584,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @return the properly spelled version.
 	 */
 	@Deprecated // (forRemoval=true) // add back once Java 9 is the minimum supported version
-	public Date getBainHasmashosYereim2Point1Degrees() {
+	public ZonedDateTime getBainHasmashosYereim2Point1Degrees() {
 		return getBainHashmashosYereim2Point1Degrees();
 	}
 	
@@ -2593,7 +2595,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @return the <code>Date</code> representing the time when the sun is 3.7&deg; below sea level.
 	 * @see #ZENITH_3_POINT_7
 	 */
-	public Date getTzaisGeonim3Point7Degrees() {
+	public ZonedDateTime getTzaisGeonim3Point7Degrees() {
 		return getSunsetOffsetByDegrees(ZENITH_3_POINT_7);
 	}
 
@@ -2604,7 +2606,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @return the <code>Date</code> representing the time when the sun is 3.8&deg; below sea level.
 	 * @see #ZENITH_3_POINT_8
 	 */
-	public Date getTzaisGeonim3Point8Degrees() {
+	public ZonedDateTime getTzaisGeonim3Point8Degrees() {
 		return getSunsetOffsetByDegrees(ZENITH_3_POINT_8);
 	}
 
@@ -2619,7 +2621,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         documentation.
 	 * @see #ZENITH_5_POINT_95
 	 */
-	public Date getTzaisGeonim5Point95Degrees() {
+	public ZonedDateTime getTzaisGeonim5Point95Degrees() {
 		return getSunsetOffsetByDegrees(ZENITH_5_POINT_95);
 	}
 
@@ -2640,7 +2642,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #ZENITH_3_POINT_65
 	 */
 	@Deprecated // (forRemoval=true) // add back once Java 9 is the minimum supported version
-	public Date getTzaisGeonim3Point65Degrees() {
+	public ZonedDateTime getTzaisGeonim3Point65Degrees() {
 		return getSunsetOffsetByDegrees(ZENITH_3_POINT_65);
 	}
 
@@ -2662,7 +2664,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #ZENITH_3_POINT_676
 	 */
 	@Deprecated // (forRemoval=true) // add back once Java 9 is the minimum supported version
-	public Date getTzaisGeonim3Point676Degrees() {
+	public ZonedDateTime getTzaisGeonim3Point676Degrees() {
 		return getSunsetOffsetByDegrees(ZENITH_3_POINT_676);
 	}
 
@@ -2679,7 +2681,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         documentation.
 	 * @see #ZENITH_4_POINT_61
 	 */
-	public Date getTzaisGeonim4Point61Degrees() {
+	public ZonedDateTime getTzaisGeonim4Point61Degrees() {
 		return getSunsetOffsetByDegrees(ZENITH_4_POINT_61);
 	}
 
@@ -2696,7 +2698,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         documentation.
 	 * @see #ZENITH_4_POINT_37
 	 */
-	public Date getTzaisGeonim4Point37Degrees() {
+	public ZonedDateTime getTzaisGeonim4Point37Degrees() {
 		return getSunsetOffsetByDegrees(ZENITH_4_POINT_37);
 	}
 
@@ -2715,7 +2717,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         documentation.
 	 * @see #ZENITH_5_POINT_88
 	 */
-	public Date getTzaisGeonim5Point88Degrees() {
+	public ZonedDateTime getTzaisGeonim5Point88Degrees() {
 		return getSunsetOffsetByDegrees(ZENITH_5_POINT_88);
 	}
 
@@ -2733,7 +2735,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         documentation.
 	 * @see #ZENITH_4_POINT_8
 	 */
-	public Date getTzaisGeonim4Point8Degrees() {
+	public ZonedDateTime getTzaisGeonim4Point8Degrees() {
 		return getSunsetOffsetByDegrees(ZENITH_4_POINT_8);
 	}
 	
@@ -2754,7 +2756,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         {@link AstronomicalCalendar} documentation.
 	 * @see #ZENITH_6_POINT_45
 	 */
-	public Date getTzaisGeonim6Point45Degrees() {
+	public ZonedDateTime getTzaisGeonim6Point45Degrees() {
 		return getSunsetOffsetByDegrees(ZENITH_6_POINT_45);
 	}
 
@@ -2783,7 +2785,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         {@link AstronomicalCalendar} documentation.
 	 * @see #ZENITH_7_POINT_083
 	 */
-	public Date getTzaisGeonim7Point083Degrees() {
+	public ZonedDateTime getTzaisGeonim7Point083Degrees() {
 		return getSunsetOffsetByDegrees(ZENITH_7_POINT_083);
 	}
 	
@@ -2812,7 +2814,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         {@link AstronomicalCalendar} documentation.
 	 * @see #ZENITH_7_POINT_67
 	 */
-	public Date getTzaisGeonim7Point67Degrees() {
+	public ZonedDateTime getTzaisGeonim7Point67Degrees() {
 		return getSunsetOffsetByDegrees(ZENITH_7_POINT_67);
 	}
 
@@ -2827,7 +2829,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         documentation.
 	 * @see #ZENITH_8_POINT_5
 	 */
-	public Date getTzaisGeonim8Point5Degrees() {
+	public ZonedDateTime getTzaisGeonim8Point5Degrees() {
 		return getSunsetOffsetByDegrees(ZENITH_8_POINT_5);
 	}
 	
@@ -2842,7 +2844,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         <code>null</code> will be returned. See detailed explanation on top of the {@link AstronomicalCalendar}
 	 *         documentation.
 	 */
-	public Date getTzaisGeonim9Point3Degrees() {
+	public ZonedDateTime getTzaisGeonim9Point3Degrees() {
 		return getSunsetOffsetByDegrees(ZENITH_9_POINT_3);
 	}
 	
@@ -2865,7 +2867,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *
 	 * @see #getTzais60()
 	 */
-	public Date getTzaisGeonim9Point75Degrees() {
+	public ZonedDateTime getTzaisGeonim9Point75Degrees() {
 		return getSunsetOffsetByDegrees(ZENITH_9_POINT_75);
 	}
 
@@ -2886,7 +2888,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getPlagHamincha60Minutes()
 	 * @see #getShaahZmanis60Minutes()
 	 */
-	public Date getTzais60() {
+	public ZonedDateTime getTzais60() {
 		return getTimeOffset(getElevationAdjustedSunset(), 60 * MINUTE_MILLIS);
 	}
 
@@ -2906,7 +2908,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getAteretTorahSunsetOffset()
 	 * @see #setAteretTorahSunsetOffset(double)
 	 */
-	public Date getTzaisAteretTorah() {
+	public ZonedDateTime getTzaisAteretTorah() {
 		return getTimeOffset(getElevationAdjustedSunset(), getAteretTorahSunsetOffset() * MINUTE_MILLIS);
 	}
 
@@ -2957,7 +2959,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #setAteretTorahSunsetOffset(double)
 	 * @see #getShaahZmanisAteretTorah()
 	 */
-	public Date getSofZmanShmaAteretTorah() {
+	public ZonedDateTime getSofZmanShmaAteretTorah() {
 		return getSofZmanShma(getAlos72Zmanis(), getTzaisAteretTorah());
 	}
 
@@ -2980,7 +2982,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getShaahZmanisAteretTorah()
 	 * @see #setAteretTorahSunsetOffset(double)
 	 */
-	public Date getSofZmanTfilaAteretTorah() {
+	public ZonedDateTime getSofZmanTfilaAteretTorah() {
 		return getSofZmanTfila(getAlos72Zmanis(), getTzaisAteretTorah());
 	}
 	
@@ -2993,7 +2995,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         explanation on top of the {@link AstronomicalCalendar} documentation.
 	 */
 	@Deprecated // (forRemoval=true) // add back once Java 9 is the minimum supported version
-	public Date getSofZmanTfilahAteretTorah() {
+	public ZonedDateTime getSofZmanTfilahAteretTorah() {
 		return getSofZmanTfila(getAlos72Zmanis(), getTzaisAteretTorah());
 	}
 
@@ -3021,7 +3023,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         does not set, a <code>null</code> will be returned. See detailed explanation on top of the
 	 *         {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getMinchaGedolaAteretTorah() {
+	public ZonedDateTime getMinchaGedolaAteretTorah() {
 		return getMinchaGedola(getAlos72Zmanis(), getTzaisAteretTorah());
 	}
 
@@ -3048,7 +3050,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         does not set, a <code>null</code> will be returned. See detailed explanation on top of the
 	 *         {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getMinchaKetanaAteretTorah() {
+	public ZonedDateTime getMinchaKetanaAteretTorah() {
 		return getMinchaKetana(getAlos72Zmanis(), getTzaisAteretTorah());
 	}
 
@@ -3070,7 +3072,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #setAteretTorahSunsetOffset(double)
 	 * @see #getAteretTorahSunsetOffset()
 	 */
-	public Date getPlagHaminchaAteretTorah() {
+	public ZonedDateTime getPlagHaminchaAteretTorah() {
 		return getPlagHamincha(getAlos72Zmanis(), getTzaisAteretTorah());
 	}
 
@@ -3112,7 +3114,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         documentation.
 	 * @see #getAlos72Zmanis()
 	 */
-	public Date getTzais72Zmanis() {
+	public ZonedDateTime getTzais72Zmanis() {
 		return getZmanisBasedOffset(1.2);
 	}
 	
@@ -3129,7 +3131,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         tell if it is sunrise or sunset based. See detailed explanation on top of the {@link AstronomicalCalendar}
 	 *         documentation.
 	 */
-	private Date getZmanisBasedOffset(double hours) {
+	private ZonedDateTime getZmanisBasedOffset(double hours) {
 		long shaahZmanis = getShaahZmanisGra();
 		if (shaahZmanis == Long.MIN_VALUE || hours == 0) {
 			return null;
@@ -3153,7 +3155,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         documentation.
 	 * @see #getAlos90Zmanis()
 	 */
-	public Date getTzais90Zmanis() {
+	public ZonedDateTime getTzais90Zmanis() {
 		return getZmanisBasedOffset(1.5);
 	}
 
@@ -3167,7 +3169,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         documentation.
 	 * @see #getAlos96Zmanis()
 	 */
-	public Date getTzais96Zmanis() {
+	public ZonedDateTime getTzais96Zmanis() {
 		return getZmanisBasedOffset(1.6);
 	}
 
@@ -3186,7 +3188,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getTzais19Point8Degrees()
 	 * @see #getAlos90()
 	 */
-	public Date getTzais90() {
+	public ZonedDateTime getTzais90() {
 		return getTimeOffset(getElevationAdjustedSunset(), 90 * MINUTE_MILLIS);
 	}
 
@@ -3212,7 +3214,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getAlos120()
 	 */
 	@Deprecated // (forRemoval=false) // add back once Java 9 is the minimum supported version
-	public Date getTzais120() {
+	public ZonedDateTime getTzais120() {
 		return getTimeOffset(getElevationAdjustedSunset(), 120 * MINUTE_MILLIS);
 	}
 
@@ -3235,7 +3237,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getTzais26Degrees()
 	 */
 	@Deprecated // (forRemoval=false) // add back once Java 9 is the minimum supported version
-	public Date getTzais120Zmanis() {
+	public ZonedDateTime getTzais120Zmanis() {
 		return getZmanisBasedOffset(2.0);
 	}
 
@@ -3259,7 +3261,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getTzais72()
 	 * @see #getAlos16Point1Degrees() for more information on this calculation.
 	 */
-	public Date getTzais16Point1Degrees() {
+	public ZonedDateTime getTzais16Point1Degrees() {
 		return getSunsetOffsetByDegrees(ZENITH_16_POINT_1);
 	}
 
@@ -3282,7 +3284,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getAlos26Degrees()
 	 */
 	@Deprecated // (forRemoval=false) // add back once Java 9 is the minimum supported version
-	public Date getTzais26Degrees() {
+	public ZonedDateTime getTzais26Degrees() {
 		return getSunsetOffsetByDegrees(ZENITH_26_DEGREES);
 	}
 
@@ -3295,7 +3297,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         detailed explanation on top of the {@link AstronomicalCalendar} documentation.
 	 * @see #getAlos18Degrees()
 	 */
-	public Date getTzais18Degrees() {
+	public ZonedDateTime getTzais18Degrees() {
 		return getSunsetOffsetByDegrees(ASTRONOMICAL_ZENITH);
 	}
 
@@ -3309,7 +3311,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getTzais90()
 	 * @see #getAlos19Point8Degrees()
 	 */
-	public Date getTzais19Point8Degrees() {
+	public ZonedDateTime getTzais19Point8Degrees() {
 		return getSunsetOffsetByDegrees(ZENITH_19_POINT_8);
 	}
 
@@ -3323,7 +3325,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         documentation.
 	 * @see #getAlos96()
 	 */
-	public Date getTzais96() {
+	public ZonedDateTime getTzais96() {
 		return getTimeOffset(getElevationAdjustedSunset(), 96 * MINUTE_MILLIS);
 	}
 
@@ -3346,7 +3348,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see GeoLocation#getLocalMeanTimeOffset()
 	 * @see AstronomicalCalendar#getLocalMeanTime(double)
 	 */
-	public Date getFixedLocalChatzos() {
+	public ZonedDateTime getFixedLocalChatzos() {
 		return getLocalMeanTime(12.0);
 	}
 
@@ -3377,7 +3379,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         This will likely be removed in v3.0.
 	 */
 	@Deprecated // (since="2.4.0", forRemoval=true) // add back once Java 9 is the minimum supported version
-	public Date getSofZmanShmaFixedLocal() {
+	public ZonedDateTime getSofZmanShmaFixedLocal() {
 		return getTimeOffset(getFixedLocalChatzos(), -180 * MINUTE_MILLIS);
 	}
 
@@ -3404,7 +3406,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         clock hours. This will likely be removed in v3.0.
 	 */
 	@Deprecated // (since="2.4.0", forRemoval=true) // add back once Java 9 is the minimum supported version
-	public Date getSofZmanTfilaFixedLocal() {
+	public ZonedDateTime getSofZmanTfilaFixedLocal() {
 		return getTimeOffset(getFixedLocalChatzos(), -120 * MINUTE_MILLIS);
 	}
 
@@ -3432,10 +3434,10 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getSofZmanKidushLevana15Days(Date, Date)
 	 * @see JewishCalendar#getSofZmanKidushLevanaBetweenMoldos()
 	 */
-	public Date getSofZmanKidushLevanaBetweenMoldos(Date alos, Date tzais) {
+	public ZonedDateTime getSofZmanKidushLevanaBetweenMoldos(ZonedDateTime alos, ZonedDateTime tzais) {
 		JewishCalendar jewishCalendar = new JewishCalendar();
-		jewishCalendar.setGregorianDate(getCalendar().get(Calendar.YEAR), getCalendar().get(Calendar.MONTH),
-				getCalendar().get(Calendar.DAY_OF_MONTH));
+		jewishCalendar.setGregorianDate(getCalendar().getYear(), getCalendar().getMonthValue() - 1,
+				getCalendar().getDayOfMonth());
 
 		// Do not calculate for impossible dates, but account for extreme cases. In the extreme case of Rapa Iti in French
 		// Polynesia on Dec 2027 when kiddush Levana 3 days can be said on <em>Rosh Chodesh</em>, the sof zman Kiddush Levana
@@ -3467,12 +3469,12 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @return the <em>molad</em> based time. If the <em>zman</em> does not occur during the current date, <code>null</code> will be
 	 *         returned. 
 	 */
-	private Date getMoladBasedTime(Date moladBasedTime, Date alos, Date tzais, boolean techila) {
-		Date lastMidnight = getMidnightLastNight();
-		Date midnightTonigh = getMidnightTonight();
-		if (!(moladBasedTime.before(lastMidnight) || moladBasedTime.after(midnightTonigh))){
+	private ZonedDateTime getMoladBasedTime(ZonedDateTime moladBasedTime, ZonedDateTime alos, ZonedDateTime tzais, boolean techila) {
+		ZonedDateTime lastMidnight = getMidnightLastNight();
+		ZonedDateTime midnightTonigh = getMidnightTonight();
+		if (!(moladBasedTime.isBefore(lastMidnight) || moladBasedTime.isAfter(midnightTonigh))){
 			if (alos != null || tzais != null) {
-				if (techila && !(moladBasedTime.before(tzais) || moladBasedTime.after(alos))){
+				if (techila && !(moladBasedTime.isBefore(tzais) || moladBasedTime.isAfter(alos))){
 					return tzais;
 				} else {
 					return alos;
@@ -3498,7 +3500,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getSofZmanKidushLevana15Days()
 	 * @see JewishCalendar#getSofZmanKidushLevanaBetweenMoldos()
 	 */
-	public Date getSofZmanKidushLevanaBetweenMoldos() {
+	public ZonedDateTime getSofZmanKidushLevanaBetweenMoldos() {
 		return getSofZmanKidushLevanaBetweenMoldos(null, null); 
 	}
 
@@ -3530,10 +3532,10 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getSofZmanKidushLevanaBetweenMoldos(Date, Date)
 	 * @see JewishCalendar#getSofZmanKidushLevana15Days()
 	 */
-	public Date getSofZmanKidushLevana15Days(Date alos, Date tzais) {
+	public ZonedDateTime getSofZmanKidushLevana15Days(ZonedDateTime alos, ZonedDateTime tzais) {
 		JewishCalendar jewishCalendar = new JewishCalendar();
-		jewishCalendar.setGregorianDate(getCalendar().get(Calendar.YEAR), getCalendar().get(Calendar.MONTH),
-				getCalendar().get(Calendar.DAY_OF_MONTH));
+		jewishCalendar.setGregorianDate(getCalendar().getYear(), getCalendar().getMonthValue() - 1,
+				getCalendar().getDayOfMonth());
 		// Do not calculate for impossible dates, but account for extreme cases. In the extreme case of Rapa Iti in
 		// French Polynesia on Dec 2027 when kiddush Levana 3 days can be said on <em>Rosh Chodesh</em>, the sof zman Kiddush
 		// Levana will be on the 12th of the Teves. in the case of Anadyr, Russia on Jan, 2071, sof zman kiddush levana will
@@ -3564,7 +3566,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see JewishCalendar#getSofZmanKidushLevana15Days()
 	 * 
 	 */
-	public Date getSofZmanKidushLevana15Days() {
+	public ZonedDateTime getSofZmanKidushLevana15Days() {
 		return getSofZmanKidushLevana15Days(null, null);
 	}
 	
@@ -3580,7 +3582,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getTchilasZmanKidushLevana7Days()
 	 * @see JewishCalendar#getTchilasZmanKidushLevana3Days()
 	 */
-	public Date getTchilasZmanKidushLevana3Days() {
+	public ZonedDateTime getTchilasZmanKidushLevana3Days() {
 		return getTchilasZmanKidushLevana3Days(null, null);
 	}
 
@@ -3607,10 +3609,10 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getTchilasZmanKidushLevana7Days(Date, Date)
 	 * @see JewishCalendar#getTchilasZmanKidushLevana3Days()
 	 */
-	public Date getTchilasZmanKidushLevana3Days(Date alos, Date tzais) {
+	public ZonedDateTime getTchilasZmanKidushLevana3Days(ZonedDateTime alos, ZonedDateTime tzais) {
 		JewishCalendar jewishCalendar = new JewishCalendar();
-		jewishCalendar.setGregorianDate(getCalendar().get(Calendar.YEAR), getCalendar().get(Calendar.MONTH),
-				getCalendar().get(Calendar.DAY_OF_MONTH));
+		jewishCalendar.setGregorianDate(getCalendar().getYear(), getCalendar().getMonthValue() - 1,
+				getCalendar().getDayOfMonth());
 		
 		// Do not calculate for impossible dates, but account for extreme cases. Tchilas zman kiddush Levana 3 days for
 		// the extreme case of Rapa Iti in French Polynesia on Dec 2027 when kiddush Levana 3 days can be said on the evening
@@ -3621,7 +3623,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 			return null;
 		}
 		
-		Date zman = getMoladBasedTime(jewishCalendar.getTchilasZmanKidushLevana3Days(), alos, tzais, true);
+		ZonedDateTime zman = getMoladBasedTime(jewishCalendar.getTchilasZmanKidushLevana3Days(), alos, tzais, true);
 		
 		//Get the following month's zman kiddush Levana for the extreme case of Rapa Iti in French Polynesia on Dec 2027 when
 		// kiddush Levana can be said on Rosh Chodesh (the evening of the 30th). See Rabbi Dovid Heber's Shaarei Zmanim chapter 4 (page 32)
@@ -3645,10 +3647,10 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getTchilasZmanKidushLevana7Days(Date, Date)
 	 * @see JewishCalendar#getMoladAsDate()
 	 */
-	public Date getZmanMolad() {
+	public ZonedDateTime getZmanMolad() {
 		JewishCalendar jewishCalendar = new JewishCalendar();
-		jewishCalendar.setGregorianDate(getCalendar().get(Calendar.YEAR), getCalendar().get(Calendar.MONTH),
-				getCalendar().get(Calendar.DAY_OF_MONTH));
+		jewishCalendar.setGregorianDate(getCalendar().getYear(), getCalendar().getMonthValue() - 1,
+				getCalendar().getDayOfMonth());
 		
 		// Optimize to not calculate for impossible dates, but account for extreme cases. The molad in the extreme case of Rapa
 		// Iti in French Polynesia on Dec 2027 occurs on the night of the 27th of Kislev. In the case of Anadyr, Russia on
@@ -3656,7 +3658,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 		if (jewishCalendar.getJewishDayOfMonth() > 2 && jewishCalendar.getJewishDayOfMonth() < 27) {
 			return null;
 		}
-		Date molad = getMoladBasedTime(jewishCalendar.getMoladAsDate(), null, null, true);
+		ZonedDateTime molad = getMoladBasedTime(jewishCalendar.getMoladAsDate(), null, null, true);
 
 		// deal with molad that happens on the end of the previous month
 		if (molad == null && jewishCalendar.getJewishDayOfMonth() > 26) {
@@ -3671,14 +3673,12 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getMoladBasedTime(Date, Date, Date, boolean)
 	 * @return previous midnight
 	 */
-	private Date getMidnightLastNight() {
-		Calendar midnight = (Calendar)getCalendar().clone();
-		// reset hour, minutes, seconds and millis
-		midnight.set(Calendar.HOUR_OF_DAY, 0);
-		midnight.set(Calendar.MINUTE, 0);
-		midnight.set(Calendar.SECOND, 0);
-		midnight.set(Calendar.MILLISECOND, 0);
-		return midnight.getTime();
+	private ZonedDateTime getMidnightLastNight() {
+		return ZonedDateTime.of(
+				getCalendar().toLocalDate(),
+				LocalTime.of(0, 0, 0),
+				getGeoLocation().getTimeZone().toZoneId()
+		);
 	}
 	
 	/**
@@ -3686,14 +3686,12 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getMoladBasedTime(Date, Date, Date, boolean)
 	 * @return following midnight
 	 */
-	private Date getMidnightTonight() {
-		Calendar midnight = (Calendar)getCalendar().clone();
-		midnight.add(Calendar.DAY_OF_YEAR, 1);//roll to tonight
-		midnight.set(Calendar.HOUR_OF_DAY, 0);
-		midnight.set(Calendar.MINUTE, 0);
-		midnight.set(Calendar.SECOND, 0);
-		midnight.set(Calendar.MILLISECOND, 0);
-		return midnight.getTime();
+	private ZonedDateTime getMidnightTonight() {
+		return ZonedDateTime.of(
+				getCalendar().plusDays(1).toLocalDate(), //roll to tonight
+				LocalTime.of(0,0,0),
+				getGeoLocation().getTimeZone().toZoneId()
+		);
 	}
 
 	/**
@@ -3718,10 +3716,10 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getTchilasZmanKidushLevana7Days()
 	 * @see JewishCalendar#getTchilasZmanKidushLevana7Days()
 	 */
-	public Date getTchilasZmanKidushLevana7Days(Date alos, Date tzais) {
+	public ZonedDateTime getTchilasZmanKidushLevana7Days(ZonedDateTime alos, ZonedDateTime tzais) {
 		JewishCalendar jewishCalendar = new JewishCalendar();
-		jewishCalendar.setGregorianDate(getCalendar().get(Calendar.YEAR), getCalendar().get(Calendar.MONTH),
-				getCalendar().get(Calendar.DAY_OF_MONTH));
+		jewishCalendar.setGregorianDate(getCalendar().getYear(), getCalendar().getMonthValue() - 1,
+				getCalendar().getDayOfMonth());
 		
 		// Optimize to not calculate for impossible dates, but account for extreme cases. Tchilas zman kiddush Levana 7 days for
 		// the extreme case of Rapa Iti in French Polynesia on Jan 2028 (when kiddush Levana 3 days can be said on the evening
@@ -3746,7 +3744,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see JewishCalendar#getTchilasZmanKidushLevana7Days()
 	 * @see #getTchilasZmanKidushLevana3Days()
 	 */
-	public Date getTchilasZmanKidushLevana7Days() {
+	public ZonedDateTime getTchilasZmanKidushLevana7Days() {
 		return getTchilasZmanKidushLevana7Days(null, null);
 	}
 
@@ -3766,7 +3764,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         See detailed explanation on top of the {@link AstronomicalCalendar} documentation.
 	 * @todo in v 3.0.0 enable the calendar check for erev pesach and return <code>null</code> in all other cases.
 	 */
-	public Date getSofZmanAchilasChametzGRA() {
+	public ZonedDateTime getSofZmanAchilasChametzGRA() {
 		/*JewishCalendar jewishCalendar = new JewishCalendar();
 		jewishCalendar.setGregorianDate(getCalendar().get(Calendar.YEAR), getCalendar().get(Calendar.MONTH),
 				getCalendar().get(Calendar.DAY_OF_MONTH));
@@ -3796,7 +3794,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getAlos72()
 	 * @see #getSofZmanTfilaMGA72Minutes()
 	 */
-	public Date getSofZmanAchilasChametzMGA72Minutes() {
+	public ZonedDateTime getSofZmanAchilasChametzMGA72Minutes() {
 		/*JewishCalendar jewishCalendar = new JewishCalendar();
 		jewishCalendar.setGregorianDate(getCalendar().get(Calendar.YEAR), getCalendar().get(Calendar.MONTH),
 				getCalendar().get(Calendar.DAY_OF_MONTH));
@@ -3826,7 +3824,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getAlos16Point1Degrees()
 	 * @see #getSofZmanTfilaMGA16Point1Degrees()
 	 */
-	public Date getSofZmanAchilasChametzMGA16Point1Degrees() {
+	public ZonedDateTime getSofZmanAchilasChametzMGA16Point1Degrees() {
 		/*JewishCalendar jewishCalendar = new JewishCalendar();
 		jewishCalendar.setGregorianDate(getCalendar().get(Calendar.YEAR), getCalendar().get(Calendar.MONTH),
 				getCalendar().get(Calendar.DAY_OF_MONTH));
@@ -3851,7 +3849,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         one day a year where the sun does not rise, and one where it does not set, a <code>null</code> will be
 	 *         returned. See detailed explanation on top of the {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getSofZmanBiurChametzGRA() {
+	public ZonedDateTime getSofZmanBiurChametzGRA() {
 		/*JewishCalendar jewishCalendar = new JewishCalendar();
 		jewishCalendar.setGregorianDate(getCalendar().get(Calendar.YEAR), getCalendar().get(Calendar.MONTH),
 				getCalendar().get(Calendar.DAY_OF_MONTH));
@@ -3879,7 +3877,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getShaahZmanisMGA()
 	 * @see #getAlos72()
 	 */
-	public Date getSofZmanBiurChametzMGA72Minutes() {
+	public ZonedDateTime getSofZmanBiurChametzMGA72Minutes() {
 		/*JewishCalendar jewishCalendar = new JewishCalendar();
 		jewishCalendar.setGregorianDate(getCalendar().get(Calendar.YEAR), getCalendar().get(Calendar.MONTH),
 				getCalendar().get(Calendar.DAY_OF_MONTH));
@@ -3909,7 +3907,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getShaahZmanis16Point1Degrees()
 	 * @see #getAlos16Point1Degrees()
 	 */
-	public Date getSofZmanBiurChametzMGA16Point1Degrees() {
+	public ZonedDateTime getSofZmanBiurChametzMGA16Point1Degrees() {
 		/*JewishCalendar jewishCalendar = new JewishCalendar();
 		jewishCalendar.setGregorianDate(getCalendar().get(Calendar.YEAR), getCalendar().get(Calendar.MONTH),
 				getCalendar().get(Calendar.DAY_OF_MONTH));
@@ -3955,7 +3953,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getSunsetBaalHatanya()
 	 * @see #ZENITH_1_POINT_583
 	 */
-	private Date getSunriseBaalHatanya() {
+	private ZonedDateTime getSunriseBaalHatanya() {
 		return getSunriseOffsetByDegrees(ZENITH_1_POINT_583);
 	}
 
@@ -3986,7 +3984,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getSunriseBaalHatanya()
 	 * @see #ZENITH_1_POINT_583
 	 */
-	private Date getSunsetBaalHatanya() {
+	private ZonedDateTime getSunsetBaalHatanya() {
 		return getSunsetOffsetByDegrees(ZENITH_1_POINT_583);
 	}
 
@@ -4031,7 +4029,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         low enough below the horizon for this calculation, a <code>null</code> will be returned. See detailed
 	 *         explanation on top of the {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getAlosBaalHatanya() {
+	public ZonedDateTime getAlosBaalHatanya() {
 		return getSunriseOffsetByDegrees(ZENITH_16_POINT_9);
 	}
 
@@ -4049,7 +4047,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         not rise, and one where it does not set, a <code>null</code> will be returned. See detailed explanation on
 	 *         top of the {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getSofZmanShmaBaalHatanya() {
+	public ZonedDateTime getSofZmanShmaBaalHatanya() {
 		return getSofZmanShma(getSunriseBaalHatanya(), getSunsetBaalHatanya());
 	}
 
@@ -4066,7 +4064,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         not set, a <code>null</code> will be returned. See detailed explanation on top of the
 	 *         {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getSofZmanTfilaBaalHatanya() {
+	public ZonedDateTime getSofZmanTfilaBaalHatanya() {
 		return getSofZmanTfila(getSunriseBaalHatanya(), getSunsetBaalHatanya());
 	}
 
@@ -4084,7 +4082,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         day a year where the sun does not rise, and one where it does not set, a <code>null</code> will be returned.
 	 *         See detailed explanation on top of the {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getSofZmanAchilasChametzBaalHatanya() {
+	public ZonedDateTime getSofZmanAchilasChametzBaalHatanya() {
 		/*JewishCalendar jewishCalendar = new JewishCalendar();
 		jewishCalendar.setGregorianDate(getCalendar().get(Calendar.YEAR), getCalendar().get(Calendar.MONTH),
 				getCalendar().get(Calendar.DAY_OF_MONTH));
@@ -4108,7 +4106,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         least one day a year where the sun does not rise, and one where it does not set, a <code>null</code> will be
 	 *         returned. See detailed explanation on top of the {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getSofZmanBiurChametzBaalHatanya() {
+	public ZonedDateTime getSofZmanBiurChametzBaalHatanya() {
 		/*JewishCalendar jewishCalendar = new JewishCalendar();
 		jewishCalendar.setGregorianDate(getCalendar().get(Calendar.YEAR), getCalendar().get(Calendar.MONTH),
 				getCalendar().get(Calendar.DAY_OF_MONTH));
@@ -4142,7 +4140,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         and one where it does not set, a <code>null</code> will be returned. See detailed explanation on top of the
 	 *         {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getMinchaGedolaBaalHatanya() {
+	public ZonedDateTime getMinchaGedolaBaalHatanya() {
 		return getMinchaGedola(getSunriseBaalHatanya(), getSunsetBaalHatanya());
 	}
 
@@ -4159,7 +4157,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         where the sun does not rise, and one where it does not set, a <code>null</code> will be returned. See detailed
 	 *         explanation on top of the {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getMinchaGedolaBaalHatanyaGreaterThan30() {
+	public ZonedDateTime getMinchaGedolaBaalHatanyaGreaterThan30() {
 		if (getMinchaGedola30Minutes() == null || getMinchaGedolaBaalHatanya() == null) {
 			return null;
 		} else {
@@ -4185,7 +4183,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         does not set, a <code>null</code> will be returned. See detailed explanation on top of the
 	 *         {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getMinchaKetanaBaalHatanya() {
+	public ZonedDateTime getMinchaKetanaBaalHatanya() {
 		return getMinchaKetana(getSunriseBaalHatanya(), getSunsetBaalHatanya());
 	}
 
@@ -4201,7 +4199,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         does not set, a <code>null</code> will be returned. See detailed explanation on top of the
 	 *         {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getPlagHaminchaBaalHatanya() {
+	public ZonedDateTime getPlagHaminchaBaalHatanya() {
 		return getPlagHamincha(getSunriseBaalHatanya(), getSunsetBaalHatanya());
 	}
 
@@ -4216,7 +4214,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         explanation on top of the {@link AstronomicalCalendar} documentation.
 	 * @see #ZENITH_6_DEGREES
 	 */
-	public Date getTzaisBaalHatanya() {
+	public ZonedDateTime getTzaisBaalHatanya() {
 		return this.getSunsetOffsetByDegrees(ZENITH_6_DEGREES);
 	}
 	
@@ -4248,7 +4246,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see ZmanimCalendar#getHalfDayBasedZman(Date, Date, double)
 	 */
 	@Deprecated // (forRemoval=true) // add back once Java 9 is the minimum supported version
-	public Date getFixedLocalChatzosBasedZmanim(Date startOfHalfDay, Date endOfHalfDay, double hours) {
+	public ZonedDateTime getFixedLocalChatzosBasedZmanim(ZonedDateTime startOfHalfDay, ZonedDateTime endOfHalfDay, double hours) {
 		return getHalfDayBasedZman(startOfHalfDay, endOfHalfDay, hours);
 	}
 	
@@ -4268,7 +4266,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getFixedLocalChatzos()
 	 * @see ZmanimCalendar#getHalfDayBasedZman(Date, Date, double)
 	 */
-	public Date getSofZmanShmaMGA18DegreesToFixedLocalChatzos() {
+	public ZonedDateTime getSofZmanShmaMGA18DegreesToFixedLocalChatzos() {
 		return getHalfDayBasedZman(getAlos18Degrees(), getFixedLocalChatzos(), 3);
 	}
 	
@@ -4288,7 +4286,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getFixedLocalChatzos()
 	 * @see #getHalfDayBasedZman(Date, Date, double)
 	 */
-	public Date getSofZmanShmaMGA16Point1DegreesToFixedLocalChatzos() {
+	public ZonedDateTime getSofZmanShmaMGA16Point1DegreesToFixedLocalChatzos() {
 		return getHalfDayBasedZman(getAlos16Point1Degrees(), getFixedLocalChatzos(), 3);
 	}
 	
@@ -4309,7 +4307,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getFixedLocalChatzos()
 	 * @see #getHalfDayBasedZman(Date, Date, double)
 	 */
-	public Date getSofZmanShmaMGA90MinutesToFixedLocalChatzos() {
+	public ZonedDateTime getSofZmanShmaMGA90MinutesToFixedLocalChatzos() {
 		return getHalfDayBasedZman(getAlos90(), getFixedLocalChatzos(), 3);
 	}
 	
@@ -4330,7 +4328,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getFixedLocalChatzos()
 	 * @see #getHalfDayBasedZman(Date, Date, double)
 	 */
-	public Date getSofZmanShmaMGA72MinutesToFixedLocalChatzos() {
+	public ZonedDateTime getSofZmanShmaMGA72MinutesToFixedLocalChatzos() {
 		return getHalfDayBasedZman(getAlos72(), getFixedLocalChatzos(), 3);
 	}
 		
@@ -4350,7 +4348,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getFixedLocalChatzos()
 	 * @see #getHalfDayBasedZman(Date, Date, double)
 	 */
-	public Date getSofZmanShmaGRASunriseToFixedLocalChatzos() {
+	public ZonedDateTime getSofZmanShmaGRASunriseToFixedLocalChatzos() {
 		return getHalfDayBasedZman(getSunrise(), getFixedLocalChatzos(), 3);
 	}
 	
@@ -4370,7 +4368,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getFixedLocalChatzos()
 	 * @see #getHalfDayBasedZman(Date, Date, double)
 	 */
-	public Date getSofZmanTfilaGRASunriseToFixedLocalChatzos() {
+	public ZonedDateTime getSofZmanTfilaGRASunriseToFixedLocalChatzos() {
 		return getHalfDayBasedZman(getSunrise(), getFixedLocalChatzos(), 4);
 	}
 	
@@ -4389,7 +4387,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getFixedLocalChatzos()
 	 * @see #getMinchaKetanaGRAFixedLocalChatzosToSunset
 	 */
-	public Date getMinchaGedolaGRAFixedLocalChatzos30Minutes() {
+	public ZonedDateTime getMinchaGedolaGRAFixedLocalChatzos30Minutes() {
 		return getTimeOffset(getFixedLocalChatzos(), MINUTE_MILLIS * 30);
 	}
 	
@@ -4410,7 +4408,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getMinchaGedolaGRAFixedLocalChatzos30Minutes
 	 * @see ZmanimCalendar#getHalfDayBasedZman(Date, Date, double)
 	 */
-	public Date getMinchaKetanaGRAFixedLocalChatzosToSunset() {
+	public ZonedDateTime getMinchaKetanaGRAFixedLocalChatzosToSunset() {
 		return getHalfDayBasedZman(getFixedLocalChatzos(), getSunset(), 3.5);
 	}
 	
@@ -4431,7 +4429,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getMinchaGedolaGRAFixedLocalChatzos30Minutes
 	 * @see ZmanimCalendar#getHalfDayBasedZman(Date, Date, double)
 	 */
-	public Date getPlagHaminchaGRAFixedLocalChatzosToSunset() {
+	public ZonedDateTime getPlagHaminchaGRAFixedLocalChatzosToSunset() {
 		return getHalfDayBasedZman(getFixedLocalChatzos(), getSunset(), 4.75);
 	}
 	
@@ -4445,7 +4443,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         a <code>null</code> will be returned. See detailed explanation on top of the {@link AstronomicalCalendar}
 	 *         documentation.
 	 */
-	public Date getTzais50() {
+	public ZonedDateTime getTzais50() {
 		return getTimeOffset(getElevationAdjustedSunset(), 50 * MINUTE_MILLIS);
 	}
 	
@@ -4466,7 +4464,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         where the sun may not reach low enough below the horizon for this calculation, a <code>null</code> will be
 	 *         returned. See detailed explanation on top of the {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getSamuchLeMinchaKetanaGRA() {
+	public ZonedDateTime getSamuchLeMinchaKetanaGRA() {
 		return getSamuchLeMinchaKetana(getElevationAdjustedSunrise(), getElevationAdjustedSunset());
 	}
 	
@@ -4484,7 +4482,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         where the sun may not reach low enough below the horizon for this calculation, a <code>null</code> will be returned.
 	 *         See detailed explanation on top of the {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getSamuchLeMinchaKetana16Point1Degrees() {
+	public ZonedDateTime getSamuchLeMinchaKetana16Point1Degrees() {
 		return getSamuchLeMinchaKetana(getAlos16Point1Degrees(), getTzais16Point1Degrees());
 	}
 	
@@ -4502,7 +4500,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         where the sun may not reach low enough below the horizon for this calculation, a <code>null</code> will be returned.
 	 *         See detailed explanation on top of the {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getSamuchLeMinchaKetana72Minutes() {
+	public ZonedDateTime getSamuchLeMinchaKetana72Minutes() {
 		return getSamuchLeMinchaKetana(getAlos72(), getTzais72());
 	}
 }

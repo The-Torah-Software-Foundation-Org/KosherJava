@@ -15,6 +15,7 @@
  */
 package com.kosherjava.zmanim.util;
 
+import java.time.ZonedDateTime;
 import java.util.Calendar;
 
 /**
@@ -50,9 +51,9 @@ public class NOAACalculator extends AstronomicalCalculator {
 	}
 
 	/**
-	 * @see com.kosherjava.zmanim.util.AstronomicalCalculator#getUTCSunrise(Calendar, GeoLocation, double, boolean)
+	 * @see AstronomicalCalculator#getUTCSunrise(ZonedDateTime, GeoLocation, double, boolean)
 	 */
-	public double getUTCSunrise(Calendar calendar, GeoLocation geoLocation, double zenith, boolean adjustForElevation) {
+	public double getUTCSunrise(ZonedDateTime calendar, GeoLocation geoLocation, double zenith, boolean adjustForElevation) {
 		double elevation = adjustForElevation ? geoLocation.getElevation() : 0;
 		double adjustedZenith = adjustZenith(zenith, elevation);
 
@@ -71,9 +72,9 @@ public class NOAACalculator extends AstronomicalCalculator {
 	}
 
 	/**
-	 * @see com.kosherjava.zmanim.util.AstronomicalCalculator#getUTCSunset(Calendar, GeoLocation, double, boolean)
+	 * @see AstronomicalCalculator#getUTCSunset(ZonedDateTime, GeoLocation, double, boolean)
 	 */
-	public double getUTCSunset(Calendar calendar, GeoLocation geoLocation, double zenith, boolean adjustForElevation) {
+	public double getUTCSunset(ZonedDateTime calendar, GeoLocation geoLocation, double zenith, boolean adjustForElevation) {
 		double elevation = adjustForElevation ? geoLocation.getElevation() : 0;
 		double adjustedZenith = adjustZenith(zenith, elevation);
 
@@ -99,10 +100,10 @@ public class NOAACalculator extends AstronomicalCalculator {
 	 * @return the Julian day corresponding to the date Note: Number is returned for start of day. Fractional days
 	 *         should be added later.
 	 */
-	private static double getJulianDay(Calendar calendar) {
-		int year = calendar.get(Calendar.YEAR);
-		int month = calendar.get(Calendar.MONTH) + 1;
-		int day = calendar.get(Calendar.DAY_OF_MONTH);
+	private static double getJulianDay(ZonedDateTime calendar) {
+		int year = calendar.getYear();
+		int month = calendar.getMonthValue();
+		int day = calendar.getDayOfMonth();
 		if (month <= 2) {
 			year -= 1;
 			month += 12;
@@ -381,14 +382,14 @@ public class NOAACalculator extends AstronomicalCalculator {
 	 * @return solar elevation in degrees - horizon is 0 degrees, civil twilight is -6 degrees
 	 */
 
-	public static double getSolarElevation(Calendar cal, double lat, double lon) {
+	public static double getSolarElevation(ZonedDateTime cal, double lat, double lon) {
 		double julianDay = getJulianDay(cal);
 		double julianCenturies = getJulianCenturiesFromJulianDay(julianDay);
 
 		Double eot = getEquationOfTime(julianCenturies);
 
-		double longitude = (cal.get(Calendar.HOUR_OF_DAY) + 12.0)
-				+ (cal.get(Calendar.MINUTE) + eot + cal.get(Calendar.SECOND) / 60.0) / 60.0;
+		double longitude = (cal.getHour() + 12.0)
+				+ (cal.getMinute() + eot + cal.getSecond() / 60.0) / 60.0;
 
 		longitude = -(longitude * 360.0 / 24.0) % 360.0;
 		double hourAngle_rad = Math.toRadians(lon - longitude);
@@ -414,14 +415,14 @@ public class NOAACalculator extends AstronomicalCalculator {
 	 * @return the solar azimuth
 	 */
 
-	public static double getSolarAzimuth(Calendar cal, double lat, double lon) {
+	public static double getSolarAzimuth(ZonedDateTime cal, double lat, double lon) {
 		double julianDay = getJulianDay(cal);
 		double julianCenturies = getJulianCenturiesFromJulianDay(julianDay);
 
 		Double eot = getEquationOfTime(julianCenturies);
 
-		double longitude = (cal.get(Calendar.HOUR_OF_DAY) + 12.0)
-				+ (cal.get(Calendar.MINUTE) + eot + cal.get(Calendar.SECOND) / 60.0) / 60.0;
+		double longitude = (cal.getHour() + 12.0)
+				+ (cal.getMinute() + eot + cal.getSecond() / 60.0) / 60.0;
 
 		longitude = -(longitude * 360.0 / 24.0) % 360.0;
 		double hourAngle_rad = Math.toRadians(lon - longitude);
@@ -487,7 +488,7 @@ public class NOAACalculator extends AstronomicalCalculator {
 	 * Other calculators may return a more simplified calculation of halfway between sunrise and sunset. See <a href=
 	 * "https://kosherjava.com/2020/07/02/definition-of-chatzos/">The Definition of <em>Chatzos</em></a> for details on
 	 * solar noon calculations.
-	 * @see com.kosherjava.zmanim.util.AstronomicalCalculator#getUTCNoon(Calendar, GeoLocation)
+	 * @see AstronomicalCalculator#getUTCNoon(ZonedDateTime, GeoLocation)
 	 * @see #getSolarNoonUTC(double, double)
 	 * 
 	 * @param calendar
@@ -497,7 +498,7 @@ public class NOAACalculator extends AstronomicalCalculator {
 	 *            the longitude for calculating noon since it is the same time anywhere along the longitude line.
 	 * @return the time in minutes from zero UTC
 	 */
-	public double getUTCNoon(Calendar calendar, GeoLocation geoLocation) {
+	public double getUTCNoon(ZonedDateTime calendar, GeoLocation geoLocation) {
 		double julianDay = getJulianDay(calendar);
 		double julianCenturies = getJulianCenturiesFromJulianDay(julianDay);
 		
@@ -527,8 +528,8 @@ public class NOAACalculator extends AstronomicalCalculator {
 	 * 
 	 * @return the time in minutes from zero UTC
 	 * 
-	 * @see com.kosherjava.zmanim.util.AstronomicalCalculator#getUTCNoon(Calendar, GeoLocation)
-	 * @see #getUTCNoon(Calendar, GeoLocation)
+	 * @see AstronomicalCalculator#getUTCNoon(ZonedDateTime, GeoLocation)
+	 * @see AstronomicalCalculator#getUTCNoon(ZonedDateTime, GeoLocation)
 	 */
 	private static double getSolarNoonUTC(double julianCenturies, double longitude) {
 		// First pass uses approximate solar noon to calculate equation of time

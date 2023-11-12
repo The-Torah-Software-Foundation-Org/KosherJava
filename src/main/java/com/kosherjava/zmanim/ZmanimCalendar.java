@@ -15,8 +15,8 @@
  */
 package com.kosherjava.zmanim;
 
+import java.time.ZonedDateTime;
 import java.util.Calendar;
-import java.util.Date;
 
 import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar;
 import com.kosherjava.zmanim.util.AstronomicalCalculator;
@@ -265,7 +265,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 *         {@link AstronomicalCalendar#getSunrise()} if it is true.
 	 * @see com.kosherjava.zmanim.AstronomicalCalendar#getSunrise()
 	 */
-	protected Date getElevationAdjustedSunrise() {
+	protected ZonedDateTime getElevationAdjustedSunrise() {
 		if(isUseElevation()) {
 			return super.getSunrise();
 		}
@@ -281,7 +281,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 *         {@link AstronomicalCalendar#getSunset()} if it is true.
 	 * @see com.kosherjava.zmanim.AstronomicalCalendar#getSunset()
 	 */
-	protected Date getElevationAdjustedSunset() {
+	protected ZonedDateTime getElevationAdjustedSunset() {
 		if(isUseElevation()) {
 			return super.getSunset();
 		}
@@ -303,7 +303,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 * @see #ZENITH_8_POINT_5
 	 * ComplexZmanimCalendar#getTzaisGeonim8Point5Degrees() that returns an identical time to this generic <em>tzais</em>
 	 */
-	public Date getTzais() {
+	public ZonedDateTime getTzais() {
 		return getSunsetOffsetByDegrees(ZENITH_8_POINT_5);
 	}
 
@@ -324,7 +324,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 *         low enough below the horizon for this calculation, a <code>null</code> will be returned. See detailed
 	 *         explanation on top of the {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getAlosHashachar() {
+	public ZonedDateTime getAlosHashachar() {
 		return getSunriseOffsetByDegrees(ZENITH_16_POINT_1);
 	}
 
@@ -341,7 +341,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 *         a <code>null</code> will be returned. See detailed explanation on top of the {@link AstronomicalCalendar}
 	 *         documentation.
 	 */
-	public Date getAlos72() {
+	public ZonedDateTime getAlos72() {
 		return getTimeOffset(getElevationAdjustedSunrise(), -72 * MINUTE_MILLIS);
 	}
 
@@ -369,11 +369,11 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 *         support astronomical calculations (that will never report a <code>null</code>) a <code>null</code> will be returned.
 	 *         See detailed explanation on top of the {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getChatzos() {
+	public ZonedDateTime getChatzos() {
 		if(useAstronomicalChatzos) {
 			return getSunTransit(); // can be null of the calculator does not support astronomical chatzos
 		} else {
-			Date halfDayChatzos = getChatzosAsHalfDay();
+			ZonedDateTime halfDayChatzos = getChatzosAsHalfDay();
 			if(halfDayChatzos == null) {
 				return getSunTransit(); // can be null if the calculator does not support astronomical chatzos
 			} else {
@@ -398,9 +398,9 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 * zmaniyos</em> after sunrise. See <a href="https://kosherjava.com/2020/07/02/definition-of-chatzos/">The Definition
 	 * of <em>Chatzos</em></a> for a detailed explanation of the ways to calculate <em>Chatzos</em>.
 	 *
-	 * @see com.kosherjava.zmanim.util.NOAACalculator#getUTCNoon(Calendar, GeoLocation)
-	 * @see com.kosherjava.zmanim.util.SunTimesCalculator#getUTCNoon(Calendar, GeoLocation)
-	 * @see com.kosherjava.zmanim.util.AstronomicalCalculator#getUTCNoon(Calendar, GeoLocation)
+	 * @see AstronomicalCalculator#getUTCNoon(ZonedDateTime, GeoLocation)
+	 * @see AstronomicalCalculator#getUTCNoon(ZonedDateTime, GeoLocation)
+	 * @see AstronomicalCalculator#getUTCNoon(ZonedDateTime, GeoLocation)
 	 * @see AstronomicalCalendar#getSunTransit(Date, Date)
 	 * @see #getChatzos()
 	 * @see #getSunTransit()
@@ -411,7 +411,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 *         it does not set, a <code>null</code> will be returned. See detailed explanation on top of the
 	 *         {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getChatzosAsHalfDay() {
+	public ZonedDateTime getChatzosAsHalfDay() {
 		return getSunTransit(getSeaLevelSunrise(), getSeaLevelSunset());
 	}
 
@@ -446,7 +446,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 *         a year where the sun does not rise, and one where it does not set, a <code>null</code> will be returned. See
 	 *         detailed explanation on top of the {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getSofZmanShma(Date startOfDay, Date endOfDay, boolean synchronous) {
+	public ZonedDateTime getSofZmanShma(ZonedDateTime startOfDay, ZonedDateTime endOfDay, boolean synchronous) {
 		if(isUseAstronomicalChatzosForOtherZmanim() && synchronous) {
 			return getHalfDayBasedZman(startOfDay, getChatzos(), 3);
 		} else {
@@ -470,7 +470,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 *         detailed explanation on top of the {@link AstronomicalCalendar} documentation.
 	 * @see #getSofZmanShma(Date, Date, boolean)
 	 */
-	public Date getSofZmanShma(Date startOfDay, Date endOfDay) {
+	public ZonedDateTime getSofZmanShma(ZonedDateTime startOfDay, ZonedDateTime endOfDay) {
 		return getSofZmanShma(startOfDay, endOfDay, false);
 	}
 
@@ -492,7 +492,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 *         and one where it does not set, a <code>null</code> will be returned. See the detailed explanation on top
 	 *         of the {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getSofZmanShmaGRA() {
+	public ZonedDateTime getSofZmanShmaGRA() {
 		return getSofZmanShma(getElevationAdjustedSunrise(), getElevationAdjustedSunset(), true);
 	}
 
@@ -513,7 +513,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 * @see ComplexZmanimCalendar#getAlos72()
 	 * @see ComplexZmanimCalendar#getSofZmanShmaMGA72Minutes() that 
 	 */
-	public Date getSofZmanShmaMGA() {
+	public ZonedDateTime getSofZmanShmaMGA() {
 		return getSofZmanShma(getAlos72(), getTzais72(), true);
 	}
 
@@ -532,7 +532,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 *         and one where it does not set, a <code>null</code> will be returned See detailed explanation on top of the
 	 *         {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getTzais72() {
+	public ZonedDateTime getTzais72() {
 		return getTimeOffset(getElevationAdjustedSunset(), 72 * MINUTE_MILLIS);
 	}
 
@@ -551,7 +551,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 * @see #getCandleLightingOffset()
 	 * @see #setCandleLightingOffset(double)
 	 */
-	public Date getCandleLighting() {
+	public ZonedDateTime getCandleLighting() {
 		return getTimeOffset(getSeaLevelSunset(), -getCandleLightingOffset() * MINUTE_MILLIS);
 	}
 
@@ -587,7 +587,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 *         one day a year where the sun does not rise, and one where it does not set, a <code>null</code> will be
 	 *         returned. See detailed explanation on top of the {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getSofZmanTfila(Date startOfDay, Date endOfDay, boolean synchronous) {
+	public ZonedDateTime getSofZmanTfila(ZonedDateTime startOfDay, ZonedDateTime endOfDay, boolean synchronous) {
 		if(isUseAstronomicalChatzosForOtherZmanim() && synchronous) {
 			return getHalfDayBasedZman(startOfDay, getChatzos(), 4);
 		} else {
@@ -611,7 +611,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 *         detailed explanation on top of the {@link AstronomicalCalendar} documentation.
 	 * @see #getSofZmanShma(Date, Date, boolean)
 	 */
-	public Date getSofZmanTfila(Date startOfDay, Date endOfDay) {
+	public ZonedDateTime getSofZmanTfila(ZonedDateTime startOfDay, ZonedDateTime endOfDay) {
 		return getSofZmanTfila(startOfDay, endOfDay, false);
 	}
 
@@ -632,7 +632,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 *         does not set, a <code>null</code> will be returned. See detailed explanation on top of the
 	 *         {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getSofZmanTfilaGRA() {
+	public ZonedDateTime getSofZmanTfilaGRA() {
 		return getSofZmanTfila(getElevationAdjustedSunrise(), getElevationAdjustedSunset(), true);
 	}
 
@@ -652,7 +652,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 * @see #getShaahZmanisMGA()
 	 * @see #getAlos72()
 	 */
-	public Date getSofZmanTfilaMGA() {
+	public ZonedDateTime getSofZmanTfilaMGA() {
 		return getSofZmanTfila(getAlos72(), getTzais72(), true);
 	}
 
@@ -696,7 +696,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 * @see #isUseAstronomicalChatzos()
 	 * @see #isUseAstronomicalChatzosForOtherZmanim()
 	 */
-	public Date getMinchaGedola(Date startOfDay, Date endOfDay, boolean synchronous) {
+	public ZonedDateTime getMinchaGedola(ZonedDateTime startOfDay, ZonedDateTime endOfDay, boolean synchronous) {
 		if(isUseAstronomicalChatzosForOtherZmanim() && synchronous) {
 			return getHalfDayBasedZman(getChatzos(), endOfDay, 0.5);
 		} else {
@@ -721,7 +721,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 *         detailed explanation on top of the {@link AstronomicalCalendar} documentation.
 	 * @see #getMinchaGedola(Date, Date, boolean)
 	 */
-	public Date getMinchaGedola(Date startOfDay, Date endOfDay) {
+	public ZonedDateTime getMinchaGedola(ZonedDateTime startOfDay, ZonedDateTime endOfDay) {
 		return getMinchaGedola(startOfDay, endOfDay, false);
 	}
 
@@ -749,7 +749,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 *         not set, a <code>null</code> will be returned. See detailed explanation on top of the
 	 *         {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getMinchaGedola() {
+	public ZonedDateTime getMinchaGedola() {
 		return getMinchaGedola(getElevationAdjustedSunrise(), getElevationAdjustedSunset(), true);
 	}
 	
@@ -783,7 +783,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 * @see ComplexZmanimCalendar#getSamuchLeMinchaKetana16Point1Degrees()
 	 * @see ComplexZmanimCalendar#getSamuchLeMinchaKetana72Minutes()
 	 */
-	public Date getSamuchLeMinchaKetana(Date startOfDay, Date endOfDay, boolean synchronous) {
+	public ZonedDateTime getSamuchLeMinchaKetana(ZonedDateTime startOfDay, ZonedDateTime endOfDay, boolean synchronous) {
 		if(isUseAstronomicalChatzosForOtherZmanim()) {
 			return getHalfDayBasedZman(getChatzos(), endOfDay, 3);
 		} else {
@@ -807,7 +807,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 *         be returned. See detailed explanation on top of the {@link AstronomicalCalendar} documentation.
 	 * @see #getSamuchLeMinchaKetana(Date, Date, boolean)
 	 */
-	public Date getSamuchLeMinchaKetana(Date startOfDay, Date endOfDay) {
+	public ZonedDateTime getSamuchLeMinchaKetana(ZonedDateTime startOfDay, ZonedDateTime endOfDay) {
 		return getSamuchLeMinchaKetana(startOfDay, endOfDay, false);
 	}
 
@@ -844,7 +844,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 *         at least one day a year where the sun does not rise, and one where it does not set, a <code>null</code> will
 	 *         be returned. See detailed explanation on top of the {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getMinchaKetana(Date startOfDay, Date endOfDay, boolean synchronous) {
+	public ZonedDateTime getMinchaKetana(ZonedDateTime startOfDay, ZonedDateTime endOfDay, boolean synchronous) {
 		if(isUseAstronomicalChatzosForOtherZmanim()) {
 			return getHalfDayBasedZman(getChatzos(), endOfDay, 3.5);
 		} else {
@@ -868,7 +868,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 *         be returned. See detailed explanation on top of the {@link AstronomicalCalendar} documentation.
 	 * @see #getMinchaKetana(Date, Date, boolean)
 	 */
-	public Date getMinchaKetana(Date startOfDay, Date endOfDay) {
+	public ZonedDateTime getMinchaKetana(ZonedDateTime startOfDay, ZonedDateTime endOfDay) {
 		return getMinchaKetana(startOfDay, endOfDay, false);
 	}
 
@@ -892,7 +892,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 *         not set, a <code>null</code> will be returned. See detailed explanation on top of the
 	 *         {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getMinchaKetana() {
+	public ZonedDateTime getMinchaKetana() {
 		return getMinchaKetana(getElevationAdjustedSunrise(), getElevationAdjustedSunset(), true);
 	}
 
@@ -926,7 +926,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 *         at least one day a year where the sun does not rise, and one where it does not set, a <code>null</code>
 	 *         will be returned. See detailed explanation on top of the {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getPlagHamincha(Date startOfDay, Date endOfDay, boolean synchronous) {
+	public ZonedDateTime getPlagHamincha(ZonedDateTime startOfDay, ZonedDateTime endOfDay, boolean synchronous) {
 		if(isUseAstronomicalChatzosForOtherZmanim() && synchronous) {
 			return getHalfDayBasedZman(getChatzos(), endOfDay, 4.75);
 		} else {
@@ -948,7 +948,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 *         will be returned. See detailed explanation on top of the {@link AstronomicalCalendar} documentation.
 	 * @see #getPlagHamincha(Date, Date, boolean)
 	 */
-	public Date getPlagHamincha(Date startOfDay, Date endOfDay) {
+	public ZonedDateTime getPlagHamincha(ZonedDateTime startOfDay, ZonedDateTime endOfDay) {
 		return getPlagHamincha(startOfDay, endOfDay, false);
 	}
 
@@ -968,7 +968,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 *         does not set, a <code>null</code> will be returned. See detailed explanation on top of the
 	 *         {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getPlagHamincha() {
+	public ZonedDateTime getPlagHamincha() {
 		return getPlagHamincha(getElevationAdjustedSunrise(), getElevationAdjustedSunset(), true);
 	}
 
@@ -1077,10 +1077,10 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 * @see JewishCalendar#hasCandleLighting()
 	 * @see JewishCalendar#setInIsrael(boolean)
 	 */
-	public boolean isAssurBemlacha(Date currentTime, Date tzais, boolean inIsrael) {
+	public boolean isAssurBemlacha(ZonedDateTime currentTime, ZonedDateTime tzais, boolean inIsrael) {
 		JewishCalendar jewishCalendar = new JewishCalendar();
-		jewishCalendar.setGregorianDate(getCalendar().get(Calendar.YEAR), getCalendar().get(Calendar.MONTH),
-				getCalendar().get(Calendar.DAY_OF_MONTH));
+		jewishCalendar.setGregorianDate(getCalendar().getYear(), getCalendar().getMonthValue() - 1,
+				getCalendar().getDayOfMonth());
 		jewishCalendar.setInIsrael(inIsrael);
 		
 		if(jewishCalendar.hasCandleLighting() && currentTime.compareTo(getElevationAdjustedSunset()) >= 0) { //erev shabbos, YT or YT sheni and after shkiah
@@ -1117,7 +1117,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 *         where it does not set, a <code>null</code> will be  returned. See detailed explanation on top of the
 	 *         {@link AstronomicalCalendar} documentation.
 	 */
-	public Date getShaahZmanisBasedZman(Date startOfDay, Date endOfDay, double hours) {
+	public ZonedDateTime getShaahZmanisBasedZman(ZonedDateTime startOfDay, ZonedDateTime endOfDay, double hours) {
 		long shaahZmanis = getTemporalHour(startOfDay, endOfDay);
 		return getTimeOffset(startOfDay, shaahZmanis * hours);
 	}
@@ -1141,9 +1141,9 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 *         explanation on top of the page.
 	 */
 	public double getPercentOfShaahZmanisFromDegrees(double degrees, boolean sunset) {
-		Date seaLevelSunrise = getSeaLevelSunrise();
-		Date seaLevelSunset = getSeaLevelSunset();
-		Date twilight = null;
+		ZonedDateTime seaLevelSunrise = getSeaLevelSunrise();
+		ZonedDateTime seaLevelSunset = getSeaLevelSunset();
+		ZonedDateTime twilight = null;
 		if(sunset) {
 			twilight = getSunsetOffsetByDegrees(GEOMETRIC_ZENITH + degrees);
 		} else {
@@ -1152,12 +1152,12 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 		if(seaLevelSunrise == null || seaLevelSunset == null || twilight == null) {
 			return Double.MIN_VALUE;
 		}
-		double shaahZmanis = (seaLevelSunset.getTime() - seaLevelSunrise.getTime()) / 12.0;
+		double shaahZmanis = (seaLevelSunset.toEpochSecond() - seaLevelSunrise.toEpochSecond()) / 12.0;
 		long riseSetToTwilight;
 		if(sunset) {
-			riseSetToTwilight = twilight.getTime() - seaLevelSunset.getTime();
+			riseSetToTwilight = twilight.toEpochSecond() - seaLevelSunset.toEpochSecond();
 		} else {
-			riseSetToTwilight = seaLevelSunrise.getTime() - twilight.getTime();
+			riseSetToTwilight = seaLevelSunrise.toEpochSecond() - twilight.toEpochSecond();
 		}
 		return riseSetToTwilight / shaahZmanis;
 	}
@@ -1192,7 +1192,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 *
 	 * @see ComplexZmanimCalendar#getFixedLocalChatzos()
 	 */
-	public Date getHalfDayBasedZman(Date startOfHalfDay, Date endOfHalfDay, double hours) {
+	public ZonedDateTime getHalfDayBasedZman(ZonedDateTime startOfHalfDay, ZonedDateTime endOfHalfDay, double hours) {
 		if (startOfHalfDay == null || endOfHalfDay == null) {
 			return null;
 		}
@@ -1221,10 +1221,10 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 * @see #isUseAstronomicalChatzosForOtherZmanim()
 	 * @todo Consider adjusting various shaah zmanis times to use this.
 	 */
-	public long getHalfDayBasedShaahZmanis(Date startOfHalfDay, Date endOfHalfDay) {
+	public long getHalfDayBasedShaahZmanis(ZonedDateTime startOfHalfDay, ZonedDateTime endOfHalfDay) {
 		if (startOfHalfDay == null || endOfHalfDay == null) {
 			return Long.MIN_VALUE;
 		}
-		return (endOfHalfDay.getTime() - startOfHalfDay.getTime()) / 6;
+		return (endOfHalfDay.toEpochSecond() - startOfHalfDay.toEpochSecond()) / 6;
 	}
 }

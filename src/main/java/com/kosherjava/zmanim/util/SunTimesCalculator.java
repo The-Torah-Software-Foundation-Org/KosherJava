@@ -15,6 +15,7 @@
  */
 package com.kosherjava.zmanim.util;
 
+import java.time.ZonedDateTime;
 import java.util.Calendar;
 
 /**
@@ -39,9 +40,9 @@ public class SunTimesCalculator extends AstronomicalCalculator {
 	}
 
 	/**
-	 * @see com.kosherjava.zmanim.util.AstronomicalCalculator#getUTCSunrise(Calendar, GeoLocation, double, boolean)
+	 * @see AstronomicalCalculator#getUTCSunrise(ZonedDateTime, GeoLocation, double, boolean)
 	 */
-	public double getUTCSunrise(Calendar calendar, GeoLocation geoLocation, double zenith, boolean adjustForElevation) {
+	public double getUTCSunrise(ZonedDateTime calendar, GeoLocation geoLocation, double zenith, boolean adjustForElevation) {
 		double doubleTime = Double.NaN;
 		double elevation = adjustForElevation ? geoLocation.getElevation() : 0;
 		double adjustedZenith = adjustZenith(zenith, elevation);
@@ -50,9 +51,9 @@ public class SunTimesCalculator extends AstronomicalCalculator {
 	}
 
 	/**
-	 * @see com.kosherjava.zmanim.util.AstronomicalCalculator#getUTCSunset(Calendar, GeoLocation, double, boolean)
+	 * @see AstronomicalCalculator#getUTCSunset(ZonedDateTime, GeoLocation, double, boolean)
 	 */
-	public double getUTCSunset(Calendar calendar, GeoLocation geoLocation, double zenith, boolean adjustForElevation) {
+	public double getUTCSunset(ZonedDateTime calendar, GeoLocation geoLocation, double zenith, boolean adjustForElevation) {
 		double doubleTime = Double.NaN;
 		double elevation = adjustForElevation ? geoLocation.getElevation() : 0;
 		double adjustedZenith = adjustZenith(zenith, elevation);
@@ -260,7 +261,7 @@ public class SunTimesCalculator extends AstronomicalCalculator {
 	 * {@link NOAACalculator}, the default calculator, returns true solar noon. See <a href=
 	 * "https://kosherjava.com/2020/07/02/definition-of-chatzos/">The Definition of Chatzos</a> for details on solar
 	 * noon calculations.
-	 * @see com.kosherjava.zmanim.util.AstronomicalCalculator#getUTCNoon(Calendar, GeoLocation)
+	 * @see AstronomicalCalculator#getUTCNoon(ZonedDateTime, GeoLocation)
 	 * @see NOAACalculator
 	 * 
 	 * @param calendar
@@ -270,7 +271,7 @@ public class SunTimesCalculator extends AstronomicalCalculator {
 	 * @return the time in minutes from zero UTC. If an error was encountered in the calculation (expected behavior for
 	 *         some locations such as near the poles, {@link Double#NaN} will be returned.
 	 */
-	public double getUTCNoon(Calendar calendar, GeoLocation geoLocation) {
+	public double getUTCNoon(ZonedDateTime calendar, GeoLocation geoLocation) {
 		double sunrise = getUTCSunrise(calendar, geoLocation, 90, false);
 		double sunset = getUTCSunset(calendar, geoLocation, 90, false);
 		double noon = sunrise + ((sunset - sunrise) / 2);
