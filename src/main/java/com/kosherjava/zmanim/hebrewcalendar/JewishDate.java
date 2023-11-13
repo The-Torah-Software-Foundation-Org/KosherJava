@@ -1200,7 +1200,7 @@ public class JewishDate implements Comparable<JewishDate>, Cloneable {
 	 */
 	public Calendar getGregorianCalendar() {
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(getGregorianYear(), getGregorianMonth(), getGregorianDayOfMonth());
+		calendar.set(getGregorianYear(), getGregorianMonth() - 1, getGregorianDayOfMonth());
 		return calendar;
 	}
 
@@ -1210,7 +1210,7 @@ public class JewishDate implements Comparable<JewishDate>, Cloneable {
 	 * @return The {@link java.time.LocalDate}
 	 */
 	public LocalDate getLocalDate() {
-		return LocalDate.of(getGregorianYear(), getGregorianMonth() + 1, getGregorianDayOfMonth());
+		return LocalDate.of(getGregorianYear(), getGregorianMonth(), getGregorianDayOfMonth());
 	}
 
 	/**
@@ -1416,12 +1416,12 @@ public class JewishDate implements Comparable<JewishDate>, Cloneable {
 	}
 
 	/**
-	 * Returns the Gregorian month (between 0-11).
+	 * Returns the Gregorian month (between 1-12).
 	 * 
-	 * @return the Gregorian month (between 0-11). Like the java.util.Calendar, months are 0 based.
+	 * @return the Gregorian month (between 1-12).
 	 */
 	public int getGregorianMonth() {
-		return gregorianMonth - 1;
+		return gregorianMonth;
 	}
 
 	/**
