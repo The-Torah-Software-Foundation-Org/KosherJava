@@ -23,7 +23,14 @@ public class RegressionTestFileWriter {
     private static int lastPrintedPrecentage = -1;
     private static final List<LocalDate> allDays = new ArrayList<>(numDays);
     private static final AtomicInteger counter = new AtomicInteger(0);
-    private static final LocalTime midnight = LocalTime.of(0,0,0);
+    private static final LocalTime midnight = LocalTime.of(0, 0, 0);
+
+    static {
+        for (long i = 0L; i < numDays; i++) {
+            allDays.add(start.plusDays(i));
+        }
+    }
+
     public static void main(String[] args) throws IOException {
         //generates file with all the Jewish dates and times from start to end
 
@@ -31,13 +38,11 @@ public class RegressionTestFileWriter {
 //            cal.setInIsrael();
 //            cal.setIsMukafChoma();
 
-        for (long i = 0L; i < numDays; i++) {
-            allDays.add(start.plusDays(i));
-        }
+
         List<Pair> pairs = allDays.parallelStream().map((day) -> {
                     //TODO work in progress:
                     int percentDone = counter.incrementAndGet() * 100 / numDays;
-                    if(percentDone != lastPrintedPrecentage && percentDone % 20 == 0/*percent done is multiple of 20*/) {
+                    if (percentDone != lastPrintedPrecentage && percentDone % 20 == 0/*percent done is multiple of 20*/) {
                         lastPrintedPrecentage = percentDone;
                         System.out.println(percentDone + "%");
                     }
@@ -51,7 +56,8 @@ public class RegressionTestFileWriter {
                     try {
                         dafYomiBavli = cal.getDafYomiBavli();
                         dafYomiYerushalmi = cal.getDafYomiYerushalmi();
-                    } catch (Throwable ignored) {}
+                    } catch (Throwable ignored) {
+                    }
                     //deprecated
             /*cal.isVeseinTalUmatarStartDate();
             cal.isVeseinTalUmatarStartingTonight();
@@ -85,7 +91,7 @@ public class RegressionTestFileWriter {
         int chunkSize = pairs.size() / chunks;
 
         // batch write in chunks of size chunkSize, which is a 3rd of the results
-        for (int i = 0; i < pairs.size(); i+= chunkSize) {
+        for (int i = 0; i < pairs.size(); i += chunkSize) {
             List<Pair> batch = pairs.subList(i, Math.min(i + chunkSize, pairs.size()));
             for (Pair pair : batch) {
                 zmanimWriter.append(pair.zmanim.toString());
@@ -257,11 +263,11 @@ public class RegressionTestFileWriter {
                     .add(getFixedLocalChatzos.toInstant().toString())
                     .add(getSofZmanShmaFixedLocal.toInstant().toString())
                     .add(getSofZmanTfilaFixedLocal.toInstant().toString())
-                    .add(getSofZmanKidushLevanaBetweenMoldos != null    ? getSofZmanKidushLevanaBetweenMoldos.toInstant().toString()    : "null")
-                    .add(getSofZmanKidushLevana15Days != null           ? getSofZmanKidushLevana15Days.toInstant().toString()           : "null")
-                    .add(getTchilasZmanKidushLevana3Days != null        ? getTchilasZmanKidushLevana3Days.toInstant().toString()        : "null")
-                    .add(getZmanMolad != null                           ? getZmanMolad.toInstant().toString()                           : "null")
-                    .add(getTchilasZmanKidushLevana7Days != null        ? getTchilasZmanKidushLevana7Days.toInstant().toString()        : "null")
+                    .add(getSofZmanKidushLevanaBetweenMoldos != null ? getSofZmanKidushLevanaBetweenMoldos.toInstant().toString() : "null")
+                    .add(getSofZmanKidushLevana15Days != null ? getSofZmanKidushLevana15Days.toInstant().toString() : "null")
+                    .add(getTchilasZmanKidushLevana3Days != null ? getTchilasZmanKidushLevana3Days.toInstant().toString() : "null")
+                    .add(getZmanMolad != null ? getZmanMolad.toInstant().toString() : "null")
+                    .add(getTchilasZmanKidushLevana7Days != null ? getTchilasZmanKidushLevana7Days.toInstant().toString() : "null")
                     .add(getSofZmanAchilasChametzGRA.toInstant().toString())
                     .add(getSofZmanAchilasChametzMGA72Minutes.toInstant().toString())
                     .add(getSofZmanAchilasChametzMGA16Point1Degrees.toInstant().toString())
