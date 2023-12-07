@@ -6,29 +6,71 @@ import com.kosherjava.zmanim.util.GeoLocation;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.Month;
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class RegressionTestFileWriter {
+    private static final GeoLocation location = new GeoLocation("Lakewood, NJ", 40.096, -74.222, 29.02, TimeZone.getTimeZone("America/New_York"));
+    private static final LocalDate start = LocalDate.of(1, Month.DECEMBER, 20); // 18 tevet 0002 hebrew
+    private static final LocalDate end = LocalDate.of(2239, Month.SEPTEMBER, 30); // 1/1/6000 Hebrew
+
+    private static final int numDays = (int) start.until(end, ChronoUnit.DAYS) + 1/*end is exclusive*/;
+    private static int lastPrintedPrecentage = -1;
+    private static final List<LocalDate> allDays = IntStream.range(0, numDays).parallel().mapToObj(start::plusDays).collect(Collectors.toList());
+    private static final AtomicInteger counter = new AtomicInteger(0);
+    private static final LocalTime midnight = LocalTime.of(0, 0, 0);
+
+    static class Pair {
+        FullZmanim zmanim;
+        FullCalendar cal;
+
+        public Pair(FullZmanim zmanim, FullCalendar cal) {
+            this.cal = cal;
+            this.zmanim = zmanim;
+        }
+    }
+
     public static void main(String[] args) throws IOException {
-        //generates file with all the Jewish dates and times from 1/1/1 to 1/1/9999
-        LocalDate start = LocalDate.of(1, 1, 1);
-        LocalDate end = LocalDate.of(9999, 1, 1);
-        LocalDate current = start;
-        JewishCalendar cal = new JewishCalendar(current);
-        GregorianCalendar gregorian = new GregorianCalendar(current.getYear(), current.getMonthValue() - 1, current.getDayOfMonth());
-        JewishDate date = new JewishDate(current);
-        ComplexZmanimCalendar zcal = new ComplexZmanimCalendar(new GeoLocation("Lakewood, NJ", 40.096, -74.222, 29.02, TimeZone.getTimeZone("America/New_York")));
-        List<FullCalendar> calendars = new ArrayList<>();
-        List<FullZmanim> zmanim = new ArrayList<>();
+        //generates file with all the Jewish dates and times from start to end
 
 //            cal.setUseModernHolidays();
 //            cal.setInIsrael();
 //            cal.setIsMukafChoma();
-        while (current.isBefore(end)) {
-            //TODO work in progress:
-            calendars.add(new FullCalendar(current, date, cal.getYomTovIndex(), cal.getDafYomiBavli(), cal.getDafYomiYerushalmi(), cal.isIsruChag(), cal.isBirkasHachamah(), cal.getParshah(), cal.getUpcomingParshah(), cal.getSpecialShabbos(), cal.isYomTov(), cal.isYomTovAssurBemelacha(), cal.isAssurBemelacha(), cal.hasCandleLighting(), cal.isTomorrowShabbosOrYomTov(), cal.isErevYomTovSheni(), cal.isAseresYemeiTeshuva(), cal.isPesach(), cal.isCholHamoedPesach(), cal.isShavuos(), cal.isRoshHashana(), cal.isYomKippur(), cal.isSuccos(), cal.isHoshanaRabba(), cal.isShminiAtzeres(), cal.isSimchasTorah(), cal.isCholHamoedSuccos(), cal.isCholHamoed(), cal.isErevYomTov(), cal.isErevRoshChodesh(), cal.isYomKippurKatan(), cal.isBeHaB(), cal.isTaanis(), cal.isTaanisBechoros(), cal.getDayOfChanukah(), cal.isChanukah(), cal.isPurim(), cal.isRoshChodesh(), cal.isMacharChodesh(), cal.isShabbosMevorchim(), cal.getDayOfOmer(), cal.isTishaBav(), cal.getMolad(), cal.getMoladAsDate(), cal.getTchilasZmanKidushLevana3Days(), cal.getTchilasZmanKidushLevana7Days(), cal.getSofZmanKidushLevanaBetweenMoldos(), cal.getSofZmanKidushLevana15Days(), cal.getTekufasTishreiElapsedDays()));
-            zmanim.add(new FullZmanim(zcal.getShaahZmanis19Point8Degrees(), zcal.getShaahZmanis18Degrees(), zcal.getShaahZmanis26Degrees(), zcal.getShaahZmanis16Point1Degrees(), zcal.getShaahZmanis60Minutes(), zcal.getShaahZmanis72Minutes(), zcal.getShaahZmanis72MinutesZmanis(), zcal.getShaahZmanis90Minutes(), zcal.getShaahZmanis90MinutesZmanis(), zcal.getShaahZmanis96MinutesZmanis(), zcal.getShaahZmanisAteretTorah(), zcal.getShaahZmanisAlos16Point1ToTzais3Point8(), zcal.getShaahZmanisAlos16Point1ToTzais3Point7(), zcal.getShaahZmanis96Minutes(), zcal.getShaahZmanis120Minutes(), zcal.getShaahZmanis120MinutesZmanis(), zcal.getPlagHamincha120MinutesZmanis(), zcal.getPlagHamincha120Minutes(), zcal.getAlos60(), zcal.getAlos72Zmanis(), zcal.getAlos96(), zcal.getAlos90Zmanis(), zcal.getAlos96Zmanis(), zcal.getAlos90(), zcal.getAlos120(), zcal.getAlos120Zmanis(), zcal.getAlos26Degrees(), zcal.getAlos18Degrees(), zcal.getAlos19Degrees(), zcal.getAlos19Point8Degrees(), zcal.getAlos16Point1Degrees(), zcal.getMisheyakir11Point5Degrees(), zcal.getMisheyakir11Degrees(), zcal.getMisheyakir10Point2Degrees(), zcal.getMisheyakir7Point65Degrees(), zcal.getMisheyakir9Point5Degrees(), zcal.getSunrise(), zcal.getSeaLevelSunrise(), zcal.getSofZmanShmaMGA16Point1Degrees(), zcal.getSofZmanShmaMGA72Minutes(), zcal.getSofZmanShmaMGA72MinutesZmanis(), zcal.getSofZmanShmaMGA90Minutes(), zcal.getSofZmanShmaMGA90MinutesZmanis(), zcal.getSofZmanShmaMGA96Minutes(), zcal.getSofZmanShmaMGA96MinutesZmanis(), zcal.getSofZmanShma3HoursBeforeChatzos(), zcal.getSofZmanShmaMGA120Minutes(), zcal.getSofZmanShmaAlos16Point1ToSunset(), zcal.getSofZmanShmaAlos16Point1ToTzaisGeonim7Point083Degrees(), zcal.getSofZmanShmaKolEliyahu(), zcal.getSofZmanTfilaMGA19Point8Degrees(), zcal.getSofZmanTfilaMGA16Point1Degrees(), zcal.getSofZmanTfilaMGA18Degrees(), zcal.getSofZmanTfilaMGA72Minutes(), zcal.getSofZmanTfilaMGA72MinutesZmanis(), zcal.getSofZmanTfilaMGA90Minutes(), zcal.getSofZmanTfilaMGA90MinutesZmanis(), zcal.getSofZmanTfilaMGA96Minutes(), zcal.getSofZmanTfilaMGA96MinutesZmanis(), zcal.getSofZmanTfilaMGA120Minutes(), zcal.getSofZmanTfila2HoursBeforeChatzos(), zcal.getMinchaGedola30Minutes(), zcal.getMinchaGedola72Minutes(), zcal.getMinchaGedola16Point1Degrees(), zcal.getMinchaGedolaAhavatShalom(), zcal.getMinchaGedolaGreaterThan30(), zcal.getMinchaKetana16Point1Degrees(), zcal.getMinchaKetanaAhavatShalom(), zcal.getMinchaKetana72Minutes(), zcal.getPlagHamincha60Minutes(), zcal.getPlagHamincha72Minutes(), zcal.getPlagHamincha90Minutes(), zcal.getPlagHamincha96Minutes(), zcal.getPlagHamincha96MinutesZmanis(), zcal.getPlagHamincha90MinutesZmanis(), zcal.getPlagHamincha72MinutesZmanis(), zcal.getPlagHamincha16Point1Degrees(), zcal.getPlagHamincha19Point8Degrees(), zcal.getPlagHamincha26Degrees(), zcal.getPlagHamincha18Degrees(), zcal.getPlagAlosToSunset(), zcal.getPlagAlos16Point1ToTzaisGeonim7Point083Degrees(), zcal.getPlagAhavatShalom(), zcal.getBainHashmashosRT13Point24Degrees(), zcal.getBainHasmashosRT13Point24Degrees(), zcal.getBainHashmashosRT58Point5Minutes(), zcal.getBainHasmashosRT58Point5Minutes(), zcal.getBainHashmashosRT13Point5MinutesBefore7Point083Degrees(), zcal.getBainHasmashosRT13Point5MinutesBefore7Point083Degrees(), zcal.getBainHashmashosRT2Stars(), zcal.getBainHasmashosRT2Stars(), zcal.getBainHashmashosYereim18Minutes(), zcal.getBainHasmashosYereim18Minutes(), zcal.getBainHashmashosYereim3Point05Degrees(), zcal.getBainHasmashosYereim3Point05Degrees(), zcal.getBainHashmashosYereim16Point875Minutes(), zcal.getBainHasmashosYereim16Point875Minutes(), zcal.getBainHashmashosYereim2Point8Degrees(), zcal.getBainHasmashosYereim2Point8Degrees(), zcal.getBainHashmashosYereim13Point5Minutes(), zcal.getBainHasmashosYereim13Point5Minutes(), zcal.getBainHashmashosYereim2Point1Degrees(), zcal.getBainHasmashosYereim2Point1Degrees(), zcal.getTzaisGeonim3Point7Degrees(), zcal.getTzaisGeonim3Point8Degrees(), zcal.getTzaisGeonim5Point95Degrees(), zcal.getTzaisGeonim3Point65Degrees(), zcal.getTzaisGeonim3Point676Degrees(), zcal.getTzaisGeonim4Point61Degrees(), zcal.getTzaisGeonim4Point37Degrees(), zcal.getTzaisGeonim5Point88Degrees(), zcal.getTzaisGeonim4Point8Degrees(), zcal.getTzaisGeonim6Point45Degrees(), zcal.getTzaisGeonim7Point083Degrees(), zcal.getTzaisGeonim7Point67Degrees(), zcal.getTzaisGeonim8Point5Degrees(), zcal.getTzaisGeonim9Point3Degrees(), zcal.getTzaisGeonim9Point75Degrees(), zcal.getTzais60(), zcal.getTzaisAteretTorah(), zcal.getSofZmanShmaAteretTorah(), zcal.getSofZmanTfilahAteretTorah(), zcal.getMinchaGedolaAteretTorah(), zcal.getMinchaKetanaAteretTorah(), zcal.getPlagHaminchaAteretTorah(), zcal.getTzais72Zmanis(), zcal.getTzais90Zmanis(), zcal.getTzais96Zmanis(), zcal.getTzais90(), zcal.getTzais120(), zcal.getTzais120Zmanis(), zcal.getTzais16Point1Degrees(), zcal.getTzais26Degrees(), zcal.getTzais18Degrees(), zcal.getTzais19Point8Degrees(), zcal.getTzais96(), zcal.getFixedLocalChatzos(), zcal.getSofZmanShmaFixedLocal(), zcal.getSofZmanTfilaFixedLocal(), zcal.getSofZmanKidushLevanaBetweenMoldos(), zcal.getSofZmanKidushLevana15Days(), zcal.getTchilasZmanKidushLevana3Days(), zcal.getZmanMolad(), zcal.getTchilasZmanKidushLevana7Days(), zcal.getSofZmanAchilasChametzGRA(), zcal.getSofZmanAchilasChametzMGA72Minutes(), zcal.getSofZmanAchilasChametzMGA16Point1Degrees(), zcal.getSofZmanBiurChametzGRA(), zcal.getSofZmanBiurChametzMGA72Minutes(), zcal.getSofZmanBiurChametzMGA16Point1Degrees(), zcal.getSolarMidnight(), zcal.getShaahZmanisBaalHatanya(), zcal.getAlosBaalHatanya(), zcal.getSofZmanShmaBaalHatanya(), zcal.getSofZmanTfilaBaalHatanya(), zcal.getSofZmanAchilasChametzBaalHatanya(), zcal.getSofZmanBiurChametzBaalHatanya(), zcal.getMinchaGedolaBaalHatanya(), zcal.getMinchaGedolaBaalHatanyaGreaterThan30(), zcal.getMinchaKetanaBaalHatanya(), zcal.getPlagHaminchaBaalHatanya(), zcal.getTzaisBaalHatanya(), zcal.getSofZmanShmaMGA18DegreesToFixedLocalChatzos(), zcal.getSofZmanShmaMGA16Point1DegreesToFixedLocalChatzos(), zcal.getSofZmanShmaMGA90MinutesToFixedLocalChatzos(), zcal.getSofZmanShmaMGA72MinutesToFixedLocalChatzos(), zcal.getSofZmanShmaGRASunriseToFixedLocalChatzos(), zcal.getSofZmanTfilaGRASunriseToFixedLocalChatzos(), zcal.getMinchaGedolaGRAFixedLocalChatzos30Minutes(), zcal.getMinchaKetanaGRAFixedLocalChatzosToSunset(), zcal.getPlagHaminchaGRAFixedLocalChatzosToSunset(), zcal.getTzais50(), zcal.getSamuchLeMinchaKetanaGRA(), zcal.getSamuchLeMinchaKetana16Point1Degrees(), zcal.getSamuchLeMinchaKetana72Minutes()));
-            //deprecated
+
+
+        List<Pair> pairs = allDays.parallelStream().map((day) -> {
+                    //TODO work in progress:
+                    int percentDone = counter.incrementAndGet() * 100 / numDays;
+                    if (percentDone != lastPrintedPrecentage && percentDone % 20 == 0/*percent done is multiple of 20*/) {
+                        lastPrintedPrecentage = percentDone;
+                        System.out.println(percentDone + "%");
+                    }
+                    JewishCalendar cal = new JewishCalendar(day);
+                    ComplexZmanimCalendar zcal = new ComplexZmanimCalendar(location);
+                    Calendar calendar = Calendar.getInstance(location.getTimeZone());
+                    calendar.set(Calendar.YEAR, day.getYear());
+                    calendar.set(Calendar.MONTH, day.getMonthValue() - 1);
+                    calendar.set(Calendar.DAY_OF_MONTH, day.getDayOfMonth());
+                    calendar.set(Calendar.HOUR_OF_DAY, midnight.getHour());
+                    calendar.set(Calendar.MINUTE, midnight.getMinute());
+                    calendar.set(Calendar.SECOND, midnight.getSecond());
+                    zcal.setCalendar(calendar);
+
+                    Daf dafYomiBavli = null;
+                    Daf dafYomiYerushalmi = null;
+
+                    try {
+                        dafYomiBavli = cal.getDafYomiBavli();
+                        dafYomiYerushalmi = cal.getDafYomiYerushalmi();
+                    } catch (Throwable ignored) {
+                    }
+                    //deprecated
             /*cal.isVeseinTalUmatarStartDate();
             cal.isVeseinTalUmatarStartingTonight();
             cal.isVeseinTalUmatarRecited();
@@ -37,33 +79,44 @@ public class RegressionTestFileWriter {
             cal.isMashivHaruachEndDate();
             cal.isMashivHaruachRecited();
             cal.isMoridHatalRecited();*/
-
-            current = current.plusDays(1L);
-            gregorian.roll(Calendar.DATE, true);
-            date.forward(Calendar.DATE, 1);
-            cal.setDate(current);
-            zcal.setCalendar(gregorian);
-        }
+                    return new Pair(
+                            new FullZmanim(zcal.getShaahZmanis19Point8Degrees(), zcal.getShaahZmanis18Degrees(), zcal.getShaahZmanis26Degrees(), zcal.getShaahZmanis16Point1Degrees(), zcal.getShaahZmanis60Minutes(), zcal.getShaahZmanis72Minutes(), zcal.getShaahZmanis72MinutesZmanis(), zcal.getShaahZmanis90Minutes(), zcal.getShaahZmanis90MinutesZmanis(), zcal.getShaahZmanis96MinutesZmanis(), zcal.getShaahZmanisAteretTorah(), zcal.getShaahZmanisAlos16Point1ToTzais3Point8(), zcal.getShaahZmanisAlos16Point1ToTzais3Point7(), zcal.getShaahZmanis96Minutes(), zcal.getShaahZmanis120Minutes(), zcal.getShaahZmanis120MinutesZmanis(), zcal.getPlagHamincha120MinutesZmanis(), zcal.getPlagHamincha120Minutes(), zcal.getAlos60(), zcal.getAlos72Zmanis(), zcal.getAlos96(), zcal.getAlos90Zmanis(), zcal.getAlos96Zmanis(), zcal.getAlos90(), zcal.getAlos120(), zcal.getAlos120Zmanis(), zcal.getAlos26Degrees(), zcal.getAlos18Degrees(), zcal.getAlos19Degrees(), zcal.getAlos19Point8Degrees(), zcal.getAlos16Point1Degrees(), zcal.getMisheyakir11Point5Degrees(), zcal.getMisheyakir11Degrees(), zcal.getMisheyakir10Point2Degrees(), zcal.getMisheyakir7Point65Degrees(), zcal.getMisheyakir9Point5Degrees(), zcal.getSunrise(), zcal.getSeaLevelSunrise(), zcal.getSofZmanShmaMGA16Point1Degrees(), zcal.getSofZmanShmaMGA72Minutes(), zcal.getSofZmanShmaMGA72MinutesZmanis(), zcal.getSofZmanShmaMGA90Minutes(), zcal.getSofZmanShmaMGA90MinutesZmanis(), zcal.getSofZmanShmaMGA96Minutes(), zcal.getSofZmanShmaMGA96MinutesZmanis(), zcal.getSofZmanShma3HoursBeforeChatzos(), zcal.getSofZmanShmaMGA120Minutes(), zcal.getSofZmanShmaAlos16Point1ToSunset(), zcal.getSofZmanShmaAlos16Point1ToTzaisGeonim7Point083Degrees(), zcal.getSofZmanShmaKolEliyahu(), zcal.getSofZmanTfilaMGA19Point8Degrees(), zcal.getSofZmanTfilaMGA16Point1Degrees(), zcal.getSofZmanTfilaMGA18Degrees(), zcal.getSofZmanTfilaMGA72Minutes(), zcal.getSofZmanTfilaMGA72MinutesZmanis(), zcal.getSofZmanTfilaMGA90Minutes(), zcal.getSofZmanTfilaMGA90MinutesZmanis(), zcal.getSofZmanTfilaMGA96Minutes(), zcal.getSofZmanTfilaMGA96MinutesZmanis(), zcal.getSofZmanTfilaMGA120Minutes(), zcal.getSofZmanTfila2HoursBeforeChatzos(), zcal.getMinchaGedola30Minutes(), zcal.getMinchaGedola72Minutes(), zcal.getMinchaGedola16Point1Degrees(), zcal.getMinchaGedolaAhavatShalom(), zcal.getMinchaGedolaGreaterThan30(), zcal.getMinchaKetana16Point1Degrees(), zcal.getMinchaKetanaAhavatShalom(), zcal.getMinchaKetana72Minutes(), zcal.getPlagHamincha60Minutes(), zcal.getPlagHamincha72Minutes(), zcal.getPlagHamincha90Minutes(), zcal.getPlagHamincha96Minutes(), zcal.getPlagHamincha96MinutesZmanis(), zcal.getPlagHamincha90MinutesZmanis(), zcal.getPlagHamincha72MinutesZmanis(), zcal.getPlagHamincha16Point1Degrees(), zcal.getPlagHamincha19Point8Degrees(), zcal.getPlagHamincha26Degrees(), zcal.getPlagHamincha18Degrees(), zcal.getPlagAlosToSunset(), zcal.getPlagAlos16Point1ToTzaisGeonim7Point083Degrees(), zcal.getPlagAhavatShalom(), zcal.getBainHashmashosRT13Point24Degrees(), zcal.getBainHasmashosRT13Point24Degrees(), zcal.getBainHashmashosRT58Point5Minutes(), zcal.getBainHasmashosRT58Point5Minutes(), zcal.getBainHashmashosRT13Point5MinutesBefore7Point083Degrees(), zcal.getBainHasmashosRT13Point5MinutesBefore7Point083Degrees(), zcal.getBainHashmashosRT2Stars(), zcal.getBainHasmashosRT2Stars(), zcal.getBainHashmashosYereim18Minutes(), zcal.getBainHasmashosYereim18Minutes(), zcal.getBainHashmashosYereim3Point05Degrees(), zcal.getBainHasmashosYereim3Point05Degrees(), zcal.getBainHashmashosYereim16Point875Minutes(), zcal.getBainHasmashosYereim16Point875Minutes(), zcal.getBainHashmashosYereim2Point8Degrees(), zcal.getBainHasmashosYereim2Point8Degrees(), zcal.getBainHashmashosYereim13Point5Minutes(), zcal.getBainHasmashosYereim13Point5Minutes(), zcal.getBainHashmashosYereim2Point1Degrees(), zcal.getBainHasmashosYereim2Point1Degrees(), zcal.getTzaisGeonim3Point7Degrees(), zcal.getTzaisGeonim3Point8Degrees(), zcal.getTzaisGeonim5Point95Degrees(), zcal.getTzaisGeonim3Point65Degrees(), zcal.getTzaisGeonim3Point676Degrees(), zcal.getTzaisGeonim4Point61Degrees(), zcal.getTzaisGeonim4Point37Degrees(), zcal.getTzaisGeonim5Point88Degrees(), zcal.getTzaisGeonim4Point8Degrees(), zcal.getTzaisGeonim6Point45Degrees(), zcal.getTzaisGeonim7Point083Degrees(), zcal.getTzaisGeonim7Point67Degrees(), zcal.getTzaisGeonim8Point5Degrees(), zcal.getTzaisGeonim9Point3Degrees(), zcal.getTzaisGeonim9Point75Degrees(), zcal.getTzais60(), zcal.getTzaisAteretTorah(), zcal.getSofZmanShmaAteretTorah(), zcal.getSofZmanTfilahAteretTorah(), zcal.getMinchaGedolaAteretTorah(), zcal.getMinchaKetanaAteretTorah(), zcal.getPlagHaminchaAteretTorah(), zcal.getTzais72Zmanis(), zcal.getTzais90Zmanis(), zcal.getTzais96Zmanis(), zcal.getTzais90(), zcal.getTzais120(), zcal.getTzais120Zmanis(), zcal.getTzais16Point1Degrees(), zcal.getTzais26Degrees(), zcal.getTzais18Degrees(), zcal.getTzais19Point8Degrees(), zcal.getTzais96(), zcal.getFixedLocalChatzos(), zcal.getSofZmanShmaFixedLocal(), zcal.getSofZmanTfilaFixedLocal(), zcal.getSofZmanKidushLevanaBetweenMoldos(), zcal.getSofZmanKidushLevana15Days(), zcal.getTchilasZmanKidushLevana3Days(), zcal.getZmanMolad(), zcal.getTchilasZmanKidushLevana7Days(), zcal.getSofZmanAchilasChametzGRA(), zcal.getSofZmanAchilasChametzMGA72Minutes(), zcal.getSofZmanAchilasChametzMGA16Point1Degrees(), zcal.getSofZmanBiurChametzGRA(), zcal.getSofZmanBiurChametzMGA72Minutes(), zcal.getSofZmanBiurChametzMGA16Point1Degrees(), zcal.getSolarMidnight(), zcal.getShaahZmanisBaalHatanya(), zcal.getAlosBaalHatanya(), zcal.getSofZmanShmaBaalHatanya(), zcal.getSofZmanTfilaBaalHatanya(), zcal.getSofZmanAchilasChametzBaalHatanya(), zcal.getSofZmanBiurChametzBaalHatanya(), zcal.getMinchaGedolaBaalHatanya(), zcal.getMinchaGedolaBaalHatanyaGreaterThan30(), zcal.getMinchaKetanaBaalHatanya(), zcal.getPlagHaminchaBaalHatanya(), zcal.getTzaisBaalHatanya(), zcal.getSofZmanShmaMGA18DegreesToFixedLocalChatzos(), zcal.getSofZmanShmaMGA16Point1DegreesToFixedLocalChatzos(), zcal.getSofZmanShmaMGA90MinutesToFixedLocalChatzos(), zcal.getSofZmanShmaMGA72MinutesToFixedLocalChatzos(), zcal.getSofZmanShmaGRASunriseToFixedLocalChatzos(), zcal.getSofZmanTfilaGRASunriseToFixedLocalChatzos(), zcal.getMinchaGedolaGRAFixedLocalChatzos30Minutes(), zcal.getMinchaKetanaGRAFixedLocalChatzosToSunset(), zcal.getPlagHaminchaGRAFixedLocalChatzosToSunset(), zcal.getTzais50(), zcal.getSamuchLeMinchaKetanaGRA(), zcal.getSamuchLeMinchaKetana16Point1Degrees(), zcal.getSamuchLeMinchaKetana72Minutes()),
+                            new FullCalendar(day, new JewishDate(day), cal.getYomTovIndex(), dafYomiBavli, dafYomiYerushalmi, cal.isIsruChag(), cal.isBirkasHachamah(), cal.getParshah(), cal.getUpcomingParshah(), cal.getSpecialShabbos(), cal.isYomTov(), cal.isYomTovAssurBemelacha(), cal.isAssurBemelacha(), cal.hasCandleLighting(), cal.isTomorrowShabbosOrYomTov(), cal.isErevYomTovSheni(), cal.isAseresYemeiTeshuva(), cal.isPesach(), cal.isCholHamoedPesach(), cal.isShavuos(), cal.isRoshHashana(), cal.isYomKippur(), cal.isSuccos(), cal.isHoshanaRabba(), cal.isShminiAtzeres(), cal.isSimchasTorah(), cal.isCholHamoedSuccos(), cal.isCholHamoed(), cal.isErevYomTov(), cal.isErevRoshChodesh(), cal.isYomKippurKatan(), cal.isBeHaB(), cal.isTaanis(), cal.isTaanisBechoros(), cal.getDayOfChanukah(), cal.isChanukah(), cal.isPurim(), cal.isRoshChodesh(), cal.isMacharChodesh(), cal.isShabbosMevorchim(), cal.getDayOfOmer(), cal.isTishaBav(), cal.getMolad(), cal.getMoladAsDate(), cal.getTchilasZmanKidushLevana3Days(), cal.getTchilasZmanKidushLevana7Days(), cal.getSofZmanKidushLevanaBetweenMoldos(), cal.getSofZmanKidushLevana15Days(), cal.getTekufasTishreiElapsedDays())
+                    );
+                })
+                .sorted(Comparator.comparing(pair -> pair.cal.current))
+                .collect(Collectors.toList());
         //write calendars to file:
 
         File calendarOutput = new File("lakewood_calendar.csv");
+        File zmanimOutput = new File("lakewood_zmanim.csv");
         BufferedWriter calendarWriter = new BufferedWriter(new FileWriter(calendarOutput));
+        BufferedWriter zmanimWriter = new BufferedWriter(new FileWriter(zmanimOutput));
+
         calendarWriter.write(FullCalendar.fields);
+        zmanimWriter.write(FullZmanim.fields);
+
         calendarWriter.newLine();
-        for (FullCalendar calendar : calendars) {
-            calendarWriter.write(calendar.toString());
-            calendarWriter.newLine();
+        zmanimWriter.newLine();
+
+        int chunks = 3;
+        int chunkSize = pairs.size() / chunks;
+
+        // batch write in chunks of size chunkSize, which is a 3rd of the results
+        for (int i = 0; i < pairs.size(); i += chunkSize) {
+            List<Pair> batch = pairs.subList(i, Math.min(i + chunkSize, pairs.size()));
+            for (Pair pair : batch) {
+                zmanimWriter.append(pair.zmanim.toString());
+                zmanimWriter.newLine();
+
+                calendarWriter.append(pair.cal.toString());
+                calendarWriter.newLine();
+            }
+            calendarWriter.flush();
+            zmanimWriter.flush();
+            System.gc();
         }
         calendarWriter.close();
-        
-        File zmanimOutput = new File("lakewood_zmanim.csv");
-        BufferedWriter zmanimWriter = new BufferedWriter(new FileWriter(zmanimOutput));
-        zmanimWriter.write(FullZmanim.fields);
-        zmanimWriter.newLine();
-        for (FullZmanim zman : zmanim) {
-            zmanimWriter.write(zman.toString());
-            zmanimWriter.newLine();
-        }
         zmanimWriter.close();
     }
 
@@ -89,165 +142,165 @@ public class RegressionTestFileWriter {
                     .add(Long.toString(getShaahZmanis96Minutes))
                     .add(Long.toString(getShaahZmanis120Minutes))
                     .add(Long.toString(getShaahZmanis120MinutesZmanis))
-                    .add(getPlagHamincha120MinutesZmanis.toString())
-                    .add(getPlagHamincha120Minutes.toString())
-                    .add(getAlos60.toString())
-                    .add(getAlos72Zmanis.toString())
-                    .add(getAlos96.toString())
-                    .add(getAlos90Zmanis.toString())
-                    .add(getAlos96Zmanis.toString())
-                    .add(getAlos90.toString())
-                    .add(getAlos120.toString())
-                    .add(getAlos120Zmanis.toString())
-                    .add(getAlos26Degrees.toString())
-                    .add(getAlos18Degrees.toString())
-                    .add(getAlos19Degrees.toString())
-                    .add(getAlos19Point8Degrees.toString())
-                    .add(getAlos16Point1Degrees.toString())
-                    .add(getMisheyakir11Point5Degrees.toString())
-                    .add(getMisheyakir11Degrees.toString())
-                    .add(getMisheyakir10Point2Degrees.toString())
-                    .add(getMisheyakir7Point65Degrees.toString())
-                    .add(getMisheyakir9Point5Degrees.toString())
-                    .add(getSofZmanShmaMGA19Point8Degrees.toString())
-                    .add(getSofZmanShmaMGA16Point1Degrees.toString())
-                    .add(getSofZmanShmaMGA18Degrees.toString())
-                    .add(getSofZmanShmaMGA72Minutes.toString())
-                    .add(getSofZmanShmaMGA72MinutesZmanis.toString())
-                    .add(getSofZmanShmaMGA90Minutes.toString())
-                    .add(getSofZmanShmaMGA90MinutesZmanis.toString())
-                    .add(getSofZmanShmaMGA96Minutes.toString())
-                    .add(getSofZmanShmaMGA96MinutesZmanis.toString())
-                    .add(getSofZmanShma3HoursBeforeChatzos.toString())
-                    .add(getSofZmanShmaMGA120Minutes.toString())
-                    .add(getSofZmanShmaAlos16Point1ToSunset.toString())
-                    .add(getSofZmanShmaAlos16Point1ToTzaisGeonim7Point083Degrees.toString())
-                    .add(getSofZmanShmaKolEliyahu.toString())
-                    .add(getSofZmanTfilaMGA19Point8Degrees.toString())
-                    .add(getSofZmanTfilaMGA16Point1Degrees.toString())
-                    .add(getSofZmanTfilaMGA18Degrees.toString())
-                    .add(getSofZmanTfilaMGA72Minutes.toString())
-                    .add(getSofZmanTfilaMGA72MinutesZmanis.toString())
-                    .add(getSofZmanTfilaMGA90Minutes.toString())
-                    .add(getSofZmanTfilaMGA90MinutesZmanis.toString())
-                    .add(getSofZmanTfilaMGA96Minutes.toString())
-                    .add(getSofZmanTfilaMGA96MinutesZmanis.toString())
-                    .add(getSofZmanTfilaMGA120Minutes.toString())
-                    .add(getSofZmanTfila2HoursBeforeChatzos.toString())
-                    .add(getMinchaGedola30Minutes.toString())
-                    .add(getMinchaGedola72Minutes.toString())
-                    .add(getMinchaGedola16Point1Degrees.toString())
-                    .add(getMinchaGedolaAhavatShalom.toString())
-                    .add(getMinchaGedolaGreaterThan30.toString())
-                    .add(getMinchaKetana16Point1Degrees.toString())
-                    .add(getMinchaKetanaAhavatShalom.toString())
-                    .add(getMinchaKetana72Minutes.toString())
-                    .add(getPlagHamincha60Minutes.toString())
-                    .add(getPlagHamincha72Minutes.toString())
-                    .add(getPlagHamincha90Minutes.toString())
-                    .add(getPlagHamincha96Minutes.toString())
-                    .add(getPlagHamincha96MinutesZmanis.toString())
-                    .add(getPlagHamincha90MinutesZmanis.toString())
-                    .add(getPlagHamincha72MinutesZmanis.toString())
-                    .add(getPlagHamincha16Point1Degrees.toString())
-                    .add(getPlagHamincha19Point8Degrees.toString())
-                    .add(getPlagHamincha26Degrees.toString())
-                    .add(getPlagHamincha18Degrees.toString())
-                    .add(getPlagAlosToSunset.toString())
-                    .add(getPlagAlos16Point1ToTzaisGeonim7Point083Degrees.toString())
-                    .add(getPlagAhavatShalom.toString())
-                    .add(getBainHashmashosRT13Point24Degrees.toString())
-                    .add(getBainHasmashosRT13Point24Degrees.toString())
-                    .add(getBainHashmashosRT58Point5Minutes.toString())
-                    .add(getBainHasmashosRT58Point5Minutes.toString())
-                    .add(getBainHashmashosRT13Point5MinutesBefore7Point083Degrees.toString())
-                    .add(getBainHasmashosRT13Point5MinutesBefore7Point083Degrees.toString())
-                    .add(getBainHashmashosRT2Stars.toString())
-                    .add(getBainHasmashosRT2Stars.toString())
-                    .add(getBainHashmashosYereim18Minutes.toString())
-                    .add(getBainHasmashosYereim18Minutes.toString())
-                    .add(getBainHashmashosYereim3Point05Degrees.toString())
-                    .add(getBainHasmashosYereim3Point05Degrees.toString())
-                    .add(getBainHashmashosYereim16Point875Minutes.toString())
-                    .add(getBainHasmashosYereim16Point875Minutes.toString())
-                    .add(getBainHashmashosYereim2Point8Degrees.toString())
-                    .add(getBainHasmashosYereim2Point8Degrees.toString())
-                    .add(getBainHashmashosYereim13Point5Minutes.toString())
-                    .add(getBainHasmashosYereim13Point5Minutes.toString())
-                    .add(getBainHashmashosYereim2Point1Degrees.toString())
-                    .add(getBainHasmashosYereim2Point1Degrees.toString())
-                    .add(getTzaisGeonim3Point7Degrees.toString())
-                    .add(getTzaisGeonim3Point8Degrees.toString())
-                    .add(getTzaisGeonim5Point95Degrees.toString())
-                    .add(getTzaisGeonim3Point65Degrees.toString())
-                    .add(getTzaisGeonim3Point676Degrees.toString())
-                    .add(getTzaisGeonim4Point61Degrees.toString())
-                    .add(getTzaisGeonim4Point37Degrees.toString())
-                    .add(getTzaisGeonim5Point88Degrees.toString())
-                    .add(getTzaisGeonim4Point8Degrees.toString())
-                    .add(getTzaisGeonim6Point45Degrees.toString())
-                    .add(getTzaisGeonim7Point083Degrees.toString())
-                    .add(getTzaisGeonim7Point67Degrees.toString())
-                    .add(getTzaisGeonim8Point5Degrees.toString())
-                    .add(getTzaisGeonim9Point3Degrees.toString())
-                    .add(getTzaisGeonim9Point75Degrees.toString())
-                    .add(getTzais60.toString())
-                    .add(getTzaisAteretTorah.toString())
-                    .add(getSofZmanShmaAteretTorah.toString())
-                    .add(getSofZmanTfilahAteretTorah.toString())
-                    .add(getMinchaGedolaAteretTorah.toString())
-                    .add(getMinchaKetanaAteretTorah.toString())
-                    .add(getPlagHaminchaAteretTorah.toString())
-                    .add(getTzais72Zmanis.toString())
-                    .add(getTzais90Zmanis.toString())
-                    .add(getTzais96Zmanis.toString())
-                    .add(getTzais90.toString())
-                    .add(getTzais120.toString())
-                    .add(getTzais120Zmanis.toString())
-                    .add(getTzais16Point1Degrees.toString())
-                    .add(getTzais26Degrees.toString())
-                    .add(getTzais18Degrees.toString())
-                    .add(getTzais19Point8Degrees.toString())
-                    .add(getTzais96.toString())
-                    .add(getFixedLocalChatzos.toString())
-                    .add(getSofZmanShmaFixedLocal.toString())
-                    .add(getSofZmanTfilaFixedLocal.toString())
-                    .add(getSofZmanKidushLevanaBetweenMoldos.toString())
-                    .add(getSofZmanKidushLevana15Days.toString())
-                    .add(getTchilasZmanKidushLevana3Days.toString())
-                    .add(getZmanMolad.toString())
-                    .add(getTchilasZmanKidushLevana7Days.toString())
-                    .add(getSofZmanAchilasChametzGRA.toString())
-                    .add(getSofZmanAchilasChametzMGA72Minutes.toString())
-                    .add(getSofZmanAchilasChametzMGA16Point1Degrees.toString())
-                    .add(getSofZmanBiurChametzGRA.toString())
-                    .add(getSofZmanBiurChametzMGA72Minutes.toString())
-                    .add(getSofZmanBiurChametzMGA16Point1Degrees.toString())
-                    .add(getSolarMidnight.toString())
+                    .add(getPlagHamincha120MinutesZmanis.toInstant().toString())
+                    .add(getPlagHamincha120Minutes.toInstant().toString())
+                    .add(getAlos60.toInstant().toString())
+                    .add(getAlos72Zmanis.toInstant().toString())
+                    .add(getAlos96.toInstant().toString())
+                    .add(getAlos90Zmanis.toInstant().toString())
+                    .add(getAlos96Zmanis.toInstant().toString())
+                    .add(getAlos90.toInstant().toString())
+                    .add(getAlos120.toInstant().toString())
+                    .add(getAlos120Zmanis.toInstant().toString())
+                    .add(getAlos26Degrees.toInstant().toString())
+                    .add(getAlos18Degrees.toInstant().toString())
+                    .add(getAlos19Degrees.toInstant().toString())
+                    .add(getAlos19Point8Degrees.toInstant().toString())
+                    .add(getAlos16Point1Degrees.toInstant().toString())
+                    .add(getMisheyakir11Point5Degrees.toInstant().toString())
+                    .add(getMisheyakir11Degrees.toInstant().toString())
+                    .add(getMisheyakir10Point2Degrees.toInstant().toString())
+                    .add(getMisheyakir7Point65Degrees.toInstant().toString())
+                    .add(getMisheyakir9Point5Degrees.toInstant().toString())
+                    .add(getSofZmanShmaMGA19Point8Degrees.toInstant().toString())
+                    .add(getSofZmanShmaMGA16Point1Degrees.toInstant().toString())
+                    .add(getSofZmanShmaMGA18Degrees.toInstant().toString())
+                    .add(getSofZmanShmaMGA72Minutes.toInstant().toString())
+                    .add(getSofZmanShmaMGA72MinutesZmanis.toInstant().toString())
+                    .add(getSofZmanShmaMGA90Minutes.toInstant().toString())
+                    .add(getSofZmanShmaMGA90MinutesZmanis.toInstant().toString())
+                    .add(getSofZmanShmaMGA96Minutes.toInstant().toString())
+                    .add(getSofZmanShmaMGA96MinutesZmanis.toInstant().toString())
+                    .add(getSofZmanShma3HoursBeforeChatzos.toInstant().toString())
+                    .add(getSofZmanShmaMGA120Minutes.toInstant().toString())
+                    .add(getSofZmanShmaAlos16Point1ToSunset.toInstant().toString())
+                    .add(getSofZmanShmaAlos16Point1ToTzaisGeonim7Point083Degrees.toInstant().toString())
+                    .add(getSofZmanShmaKolEliyahu.toInstant().toString())
+                    .add(getSofZmanTfilaMGA19Point8Degrees.toInstant().toString())
+                    .add(getSofZmanTfilaMGA16Point1Degrees.toInstant().toString())
+                    .add(getSofZmanTfilaMGA18Degrees.toInstant().toString())
+                    .add(getSofZmanTfilaMGA72Minutes.toInstant().toString())
+                    .add(getSofZmanTfilaMGA72MinutesZmanis.toInstant().toString())
+                    .add(getSofZmanTfilaMGA90Minutes.toInstant().toString())
+                    .add(getSofZmanTfilaMGA90MinutesZmanis.toInstant().toString())
+                    .add(getSofZmanTfilaMGA96Minutes.toInstant().toString())
+                    .add(getSofZmanTfilaMGA96MinutesZmanis.toInstant().toString())
+                    .add(getSofZmanTfilaMGA120Minutes.toInstant().toString())
+                    .add(getSofZmanTfila2HoursBeforeChatzos.toInstant().toString())
+                    .add(getMinchaGedola30Minutes.toInstant().toString())
+                    .add(getMinchaGedola72Minutes.toInstant().toString())
+                    .add(getMinchaGedola16Point1Degrees.toInstant().toString())
+                    .add(getMinchaGedolaAhavatShalom.toInstant().toString())
+                    .add(getMinchaGedolaGreaterThan30.toInstant().toString())
+                    .add(getMinchaKetana16Point1Degrees.toInstant().toString())
+                    .add(getMinchaKetanaAhavatShalom.toInstant().toString())
+                    .add(getMinchaKetana72Minutes.toInstant().toString())
+                    .add(getPlagHamincha60Minutes.toInstant().toString())
+                    .add(getPlagHamincha72Minutes.toInstant().toString())
+                    .add(getPlagHamincha90Minutes.toInstant().toString())
+                    .add(getPlagHamincha96Minutes.toInstant().toString())
+                    .add(getPlagHamincha96MinutesZmanis.toInstant().toString())
+                    .add(getPlagHamincha90MinutesZmanis.toInstant().toString())
+                    .add(getPlagHamincha72MinutesZmanis.toInstant().toString())
+                    .add(getPlagHamincha16Point1Degrees.toInstant().toString())
+                    .add(getPlagHamincha19Point8Degrees.toInstant().toString())
+                    .add(getPlagHamincha26Degrees.toInstant().toString())
+                    .add(getPlagHamincha18Degrees.toInstant().toString())
+                    .add(getPlagAlosToSunset.toInstant().toString())
+                    .add(getPlagAlos16Point1ToTzaisGeonim7Point083Degrees.toInstant().toString())
+                    .add(getPlagAhavatShalom.toInstant().toString())
+                    .add(getBainHashmashosRT13Point24Degrees.toInstant().toString())
+                    .add(getBainHasmashosRT13Point24Degrees.toInstant().toString())
+                    .add(getBainHashmashosRT58Point5Minutes.toInstant().toString())
+                    .add(getBainHasmashosRT58Point5Minutes.toInstant().toString())
+                    .add(getBainHashmashosRT13Point5MinutesBefore7Point083Degrees.toInstant().toString())
+                    .add(getBainHasmashosRT13Point5MinutesBefore7Point083Degrees.toInstant().toString())
+                    .add(getBainHashmashosRT2Stars.toInstant().toString())
+                    .add(getBainHasmashosRT2Stars.toInstant().toString())
+                    .add(getBainHashmashosYereim18Minutes.toInstant().toString())
+                    .add(getBainHasmashosYereim18Minutes.toInstant().toString())
+                    .add(getBainHashmashosYereim3Point05Degrees.toInstant().toString())
+                    .add(getBainHasmashosYereim3Point05Degrees.toInstant().toString())
+                    .add(getBainHashmashosYereim16Point875Minutes.toInstant().toString())
+                    .add(getBainHasmashosYereim16Point875Minutes.toInstant().toString())
+                    .add(getBainHashmashosYereim2Point8Degrees.toInstant().toString())
+                    .add(getBainHasmashosYereim2Point8Degrees.toInstant().toString())
+                    .add(getBainHashmashosYereim13Point5Minutes.toInstant().toString())
+                    .add(getBainHasmashosYereim13Point5Minutes.toInstant().toString())
+                    .add(getBainHashmashosYereim2Point1Degrees.toInstant().toString())
+                    .add(getBainHasmashosYereim2Point1Degrees.toInstant().toString())
+                    .add(getTzaisGeonim3Point7Degrees.toInstant().toString())
+                    .add(getTzaisGeonim3Point8Degrees.toInstant().toString())
+                    .add(getTzaisGeonim5Point95Degrees.toInstant().toString())
+                    .add(getTzaisGeonim3Point65Degrees.toInstant().toString())
+                    .add(getTzaisGeonim3Point676Degrees.toInstant().toString())
+                    .add(getTzaisGeonim4Point61Degrees.toInstant().toString())
+                    .add(getTzaisGeonim4Point37Degrees.toInstant().toString())
+                    .add(getTzaisGeonim5Point88Degrees.toInstant().toString())
+                    .add(getTzaisGeonim4Point8Degrees.toInstant().toString())
+                    .add(getTzaisGeonim6Point45Degrees.toInstant().toString())
+                    .add(getTzaisGeonim7Point083Degrees.toInstant().toString())
+                    .add(getTzaisGeonim7Point67Degrees.toInstant().toString())
+                    .add(getTzaisGeonim8Point5Degrees.toInstant().toString())
+                    .add(getTzaisGeonim9Point3Degrees.toInstant().toString())
+                    .add(getTzaisGeonim9Point75Degrees.toInstant().toString())
+                    .add(getTzais60.toInstant().toString())
+                    .add(getTzaisAteretTorah.toInstant().toString())
+                    .add(getSofZmanShmaAteretTorah.toInstant().toString())
+                    .add(getSofZmanTfilahAteretTorah.toInstant().toString())
+                    .add(getMinchaGedolaAteretTorah.toInstant().toString())
+                    .add(getMinchaKetanaAteretTorah.toInstant().toString())
+                    .add(getPlagHaminchaAteretTorah.toInstant().toString())
+                    .add(getTzais72Zmanis.toInstant().toString())
+                    .add(getTzais90Zmanis.toInstant().toString())
+                    .add(getTzais96Zmanis.toInstant().toString())
+                    .add(getTzais90.toInstant().toString())
+                    .add(getTzais120.toInstant().toString())
+                    .add(getTzais120Zmanis.toInstant().toString())
+                    .add(getTzais16Point1Degrees.toInstant().toString())
+                    .add(getTzais26Degrees.toInstant().toString())
+                    .add(getTzais18Degrees.toInstant().toString())
+                    .add(getTzais19Point8Degrees.toInstant().toString())
+                    .add(getTzais96.toInstant().toString())
+                    .add(getFixedLocalChatzos.toInstant().toString())
+                    .add(getSofZmanShmaFixedLocal.toInstant().toString())
+                    .add(getSofZmanTfilaFixedLocal.toInstant().toString())
+                    .add(getSofZmanKidushLevanaBetweenMoldos != null ? getSofZmanKidushLevanaBetweenMoldos.toInstant().toString() : "null")
+                    .add(getSofZmanKidushLevana15Days != null ? getSofZmanKidushLevana15Days.toInstant().toString() : "null")
+                    .add(getTchilasZmanKidushLevana3Days != null ? getTchilasZmanKidushLevana3Days.toInstant().toString() : "null")
+                    .add(getZmanMolad != null ? getZmanMolad.toInstant().toString() : "null")
+                    .add(getTchilasZmanKidushLevana7Days != null ? getTchilasZmanKidushLevana7Days.toInstant().toString() : "null")
+                    .add(getSofZmanAchilasChametzGRA != null ? getSofZmanAchilasChametzGRA.toInstant().toString() : "null")
+                    .add(getSofZmanAchilasChametzMGA72Minutes != null ? getSofZmanAchilasChametzMGA72Minutes.toInstant().toString() : "null")
+                    .add(getSofZmanAchilasChametzMGA16Point1Degrees != null ? getSofZmanAchilasChametzMGA16Point1Degrees.toInstant().toString() : "null")
+                    .add(getSofZmanBiurChametzGRA != null ? getSofZmanBiurChametzGRA.toInstant().toString() : "null")
+                    .add(getSofZmanBiurChametzMGA72Minutes != null ? getSofZmanBiurChametzMGA72Minutes.toInstant().toString() : "null")
+                    .add(getSofZmanBiurChametzMGA16Point1Degrees != null ? getSofZmanBiurChametzMGA16Point1Degrees.toInstant().toString() : "null")
+                    .add(getSolarMidnight.toInstant().toString())
                     .add(Long.toString(getShaahZmanisBaalHatanya))
-                    .add(getAlosBaalHatanya.toString())
-                    .add(getSofZmanShmaBaalHatanya.toString())
-                    .add(getSofZmanTfilaBaalHatanya.toString())
-                    .add(getSofZmanAchilasChametzBaalHatanya.toString())
-                    .add(getSofZmanBiurChametzBaalHatanya.toString())
-                    .add(getMinchaGedolaBaalHatanya.toString())
-                    .add(getMinchaGedolaBaalHatanyaGreaterThan30.toString())
-                    .add(getMinchaKetanaBaalHatanya.toString())
-                    .add(getPlagHaminchaBaalHatanya.toString())
-                    .add(getTzaisBaalHatanya.toString())
-                    .add(getSofZmanShmaMGA18DegreesToFixedLocalChatzos.toString())
-                    .add(getSofZmanShmaMGA16Point1DegreesToFixedLocalChatzos.toString())
-                    .add(getSofZmanShmaMGA90MinutesToFixedLocalChatzos.toString())
-                    .add(getSofZmanShmaMGA72MinutesToFixedLocalChatzos.toString())
-                    .add(getSofZmanShmaGRASunriseToFixedLocalChatzos.toString())
-                    .add(getSofZmanTfilaGRASunriseToFixedLocalChatzos.toString())
-                    .add(getMinchaGedolaGRAFixedLocalChatzos30Minutes.toString())
-                    .add(getMinchaKetanaGRAFixedLocalChatzosToSunset.toString())
-                    .add(getPlagHaminchaGRAFixedLocalChatzosToSunset.toString())
-                    .add(getTzais50.toString())
-                    .add(getSamuchLeMinchaKetanaGRA.toString())
-                    .add(getSamuchLeMinchaKetana16Point1Degrees.toString())
-                    .add(getSamuchLeMinchaKetana72Minutes.toString())
+                    .add(getAlosBaalHatanya.toInstant().toString())
+                    .add(getSofZmanShmaBaalHatanya.toInstant().toString())
+                    .add(getSofZmanTfilaBaalHatanya.toInstant().toString())
+                    .add(getSofZmanAchilasChametzBaalHatanya.toInstant().toString())
+                    .add(getSofZmanBiurChametzBaalHatanya.toInstant().toString())
+                    .add(getMinchaGedolaBaalHatanya.toInstant().toString())
+                    .add(getMinchaGedolaBaalHatanyaGreaterThan30.toInstant().toString())
+                    .add(getMinchaKetanaBaalHatanya.toInstant().toString())
+                    .add(getPlagHaminchaBaalHatanya.toInstant().toString())
+                    .add(getTzaisBaalHatanya.toInstant().toString())
+                    .add(getSofZmanShmaMGA18DegreesToFixedLocalChatzos.toInstant().toString())
+                    .add(getSofZmanShmaMGA16Point1DegreesToFixedLocalChatzos.toInstant().toString())
+                    .add(getSofZmanShmaMGA90MinutesToFixedLocalChatzos.toInstant().toString())
+                    .add(getSofZmanShmaMGA72MinutesToFixedLocalChatzos.toInstant().toString())
+                    .add(getSofZmanShmaGRASunriseToFixedLocalChatzos.toInstant().toString())
+                    .add(getSofZmanTfilaGRASunriseToFixedLocalChatzos.toInstant().toString())
+                    .add(getMinchaGedolaGRAFixedLocalChatzos30Minutes.toInstant().toString())
+                    .add(getMinchaKetanaGRAFixedLocalChatzosToSunset.toInstant().toString())
+                    .add(getPlagHaminchaGRAFixedLocalChatzosToSunset.toInstant().toString())
+                    .add(getTzais50.toInstant().toString())
+                    .add(getSamuchLeMinchaKetanaGRA.toInstant().toString())
+                    .add(getSamuchLeMinchaKetana16Point1Degrees.toInstant().toString())
+                    .add(getSamuchLeMinchaKetana72Minutes.toInstant().toString())
                     .toString();
         }
 
@@ -649,8 +702,8 @@ public class RegressionTestFileWriter {
                     .add("\"" + current + "\"")
                     .add("\"" + currentJewishDate + "\"")
                     .add("\"" + yomTovIndex + "\"")
-                    .add("\"" + dafYomiBavli + "\"")
-                    .add("\"" + dafYomiYerushalmi + "\"")
+                    .add("\"" + (dafYomiBavli == null ? "null" : dafYomiBavli.getMasechtaTransliterated() + " " + dafYomiBavli.getDaf()) + "\"")
+                    .add("\"" + (dafYomiYerushalmi == null ? "null" : dafYomiYerushalmi.getMasechtaTransliterated() + " " + dafYomiYerushalmi.getDaf()) + "\"")
                     .add("\"" + isruChag + "\"")
                     .add("\"" + birkasHachamah + "\"")
                     .add("\"" + parshah + "\"")
