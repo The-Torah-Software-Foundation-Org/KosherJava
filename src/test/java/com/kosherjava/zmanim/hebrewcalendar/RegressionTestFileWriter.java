@@ -13,23 +13,18 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class RegressionTestFileWriter {
     private static final GeoLocation location = new GeoLocation("Lakewood, NJ", 40.096, -74.222, 29.02, TimeZone.getTimeZone("America/New_York"));
     private static final LocalDate start = LocalDate.of(1, Month.DECEMBER, 20); // 18 tevet 0002 hebrew
     private static final LocalDate end = LocalDate.of(2239, Month.SEPTEMBER, 30); // 1/1/6000 Hebrew
 
-    private static final int numDays = (int) start.until(end, ChronoUnit.DAYS);
+    private static final int numDays = (int) start.until(end, ChronoUnit.DAYS) + 1 /*end is exclusive*/;
     private static int lastPrintedPrecentage = -1;
-    private static final List<LocalDate> allDays = new ArrayList<>(numDays);
+    private static final List<LocalDate> allDays = IntStream.range(0, numDays).parallel().mapToObj(start::plusDays).collect(Collectors.toList());
     private static final AtomicInteger counter = new AtomicInteger(0);
     private static final LocalTime midnight = LocalTime.of(0, 0, 0);
-
-    static {
-        for (long i = 0L; i < numDays; i++) {
-            allDays.add(start.plusDays(i));
-        }
-    }
 
     public static void main(String[] args) throws IOException {
         //generates file with all the Jewish dates and times from start to end
