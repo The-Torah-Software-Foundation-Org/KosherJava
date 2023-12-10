@@ -38,12 +38,18 @@ public class RegressionTestFileComparer {
                         isNum = false;
                     }
                     if(isNum) { //if is milliseconds, accurate to within 1000 millis, or 4 digits
-                        for (int j = 0; j < 5; j++) {
-                            if (expectedValue.charAt(j) != actualValue.charAt(j)) {
-                                matches = false;
-                                break;
-                            }
+                        String shorter;
+                        String longer;
+                        boolean expectedSmallerThanActual = expectedValue.length() < actualValue.length();
+                        if(expectedSmallerThanActual) {
+                            shorter = expectedValue;
+                            longer = actualValue;
+                        } else {
+                            shorter = actualValue;
+                            longer = expectedValue;
                         }
+                        matches = longer.startsWith(shorter);
+
                     } else {
                         boolean isDate = true;
 //                        try {
