@@ -37,6 +37,7 @@ public class RegressionTestFileWriter {
     }
 
     public static void main(String[] args) throws IOException {
+        System.out.println("Start day: " + start + " End day: " + end + "Num days: " + numDays);
         //generates file with all the Jewish dates and times from start to end
 
 //            cal.setUseModernHolidays();

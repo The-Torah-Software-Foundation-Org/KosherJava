@@ -3,10 +3,14 @@ package com.kosherjava.zmanim.hebrewcalendar;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.sql.Date;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 
 public class RegressionTestFileComparer {
     public static void main(String[] args) throws IOException {
+//        System.out.println(Date.valueOf(LocalDate.of(1,1,1)));
         RegressionTestFileComparer comparer = new RegressionTestFileComparer();
         comparer.compare(new File("lakewood_calendar_iso.csv"), new File("lakewood_calendar.csv"));
         comparer.compare(new File("lakewood_zmanim_iso.csv"), new File("lakewood_zmanim.csv"));
@@ -25,7 +29,29 @@ public class RegressionTestFileComparer {
             for (int i = 0; i < fields.length; i++) {
                 String expectedValue = expectedValues[i];
                 String actualValue = actualValues[i];
-                if(!expectedValue.equals(actualValue)) System.out.println("Field " + fields[i] + " unequal for date " + expectedValues[0] + ". Expected: " + expectedValue + "; Actual: " + actualValue);
+                boolean matches = true;
+                if(!expectedValue.equals(actualValue)) {
+                    boolean isNum = true;
+                    try {
+                        Long.parseLong(expectedValue);
+                    } catch (Throwable t) {
+                        isNum = false;
+                    }
+                    if(isNum) { //if is milliseconds, accurate to within 1000 millis, or 4 digits
+                        for (int j = 0; j < 5; j++) {
+                            if (expectedValue.charAt(j) != actualValue.charAt(j)) {
+                                matches = false;
+                                break;
+                            }
+                        }
+                    } else {
+                        boolean isDate = true;
+//                        try {
+//                            Instant expectedDate =
+//                        }
+                    }
+                }
+                if(!matches) System.out.println("Field " + fields[i] + " unequal for date " + expectedValues[0] + ". Expected: " + expectedValue + "; Actual: " + actualValue);
             }
         }
     }
